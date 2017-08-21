@@ -7,3 +7,6 @@ D:\GitHub\MyGit\Binary Search\Binary Search\obj\Debug\Binary Search.pdb
 D:\GitHub\MyGit\MyNoteProject\Binary Search\bin\Debug\Binary Search.exe.config
 D:\GitHub\MyGit\MyNoteProject\Binary Search\obj\Debug\Binary Search.exe
 D:\GitHub\MyGit\MyNoteProject\Binary Search\obj\Debug\Binary Search.pdb
+D:\GitHub\MyGit\MyNoteProject\Binary Search\bin\Debug\Binary Search.exe
+D:\GitHub\MyGit\MyNoteProject\Binary Search\bin\Debug\Binary Search.pdb
+D:\GitHub\MyGit\MyNoteProject\Binary Search\obj\Debug\Binary Search.csprojResolveAssemblyReference.cache
