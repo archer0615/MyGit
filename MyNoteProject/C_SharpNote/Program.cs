@@ -7,7 +7,7 @@ using C_SharpNote.EnumHelper;
 
 namespace C_SharpNote
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

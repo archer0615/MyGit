@@ -10,7 +10,7 @@ namespace C_SharpNote.Notes
     {
         public void MainFunction()
         {
-            decimal test = 2.5m;
+            //decimal test = 2.5m;
             Console.WriteLine("Math.Rount()");
             Console.WriteLine($"2.5 :{Math.Round(2.5)}  ???");
             Console.WriteLine("Math.Rount(, MidpointRounding.AwayFromZero)");
