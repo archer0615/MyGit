@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInversionPrincipl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI_Note", "WebAPI_Note\WebAPI_Note.csproj", "{CBB11225-C25E-49D7-856E-7920EE205098}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreWebAPI_Note", "CoreWebAPI_Note\CoreWebAPI_Note.csproj", "{A75F35B0-7EB6-4BDC-B02D-684CD70E0318}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{CBB11225-C25E-49D7-856E-7920EE205098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB11225-C25E-49D7-856E-7920EE205098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB11225-C25E-49D7-856E-7920EE205098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75F35B0-7EB6-4BDC-B02D-684CD70E0318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75F35B0-7EB6-4BDC-B02D-684CD70E0318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75F35B0-7EB6-4BDC-B02D-684CD70E0318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75F35B0-7EB6-4BDC-B02D-684CD70E0318}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
