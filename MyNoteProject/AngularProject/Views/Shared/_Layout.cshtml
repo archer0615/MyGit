@@ -1,0 +1,37 @@
+﻿
+@{ 
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/angular-block-ui.css" rel="stylesheet" />
+
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div class="content-wrapper" ng-app="MainApp">
+        <div>
+            @RenderBody()
+        </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/angularjs/angular.min.js"></script>
+    <script src="~/Scripts/angularjs/angular-animate.min.js"></script>
+    <script src="~/Scripts/i18n/angular-locale_zh-tw.js"></script>
+    @Scripts.Render("~/bundles/thirdparty")
+    <script src="~/angular-app/app.module.js?v=00.01"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="~/angular-app/controllers/Employee/EmployeeIndex.controller.js"></script>
+    <script src="~/angular-app/services/Employee/EmployeeIndex.service.js"></script>
+}
+<section class="content" ng-controller="EmployeeIndexCtrl" nextfocus-block="myBlock">
+
+    <div class="box">
+        <div class="box-body">
+            <div class="box-body" align="center">
+                <table class="table table-condensed table-bordered" style="width:80%">
+                    <thead class="thead-primary">
+                        <tr>
+                            <th class="text-center" style="width:15%">員工編號</th>
+                            <th class="text-center" style="width:15%">員工名稱</th>
+                            <th class="text-center" style="width:40%">居住地</th>
+                            <th class="text-center" style="width:20%">職稱</th>
+                            <th class="text-center" style="width:20%">詳細資料</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text text-center" ng-repeat="Item in dataList" style="cursor:move">
+                            <td>
+                                <input class="form-control" readonly="readonly" ng-model="Item.EmployeeID" />
+                            </td>
+                            <td>
+                                <input class="form-control" readonly="readonly" ng-model="Item.EmpName" />
+                            </td>
+                            <td>
+                                <input class="form-control" readonly="readonly" ng-model="Item.Country" />
+                            </td>
+                            <td>
+                                <input class="form-control" readonly="readonly" ng-model="Item.Title" />
+                            </td>
+                            <td><a class="btn btn-danger" ng-click="detail(Item.EmployeeID)">詳細資料</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                @*<div class="panel-footer text-center">
+                        <button class="btn btn-primary btn-flat" style="margin-right: 3%" ng-click="save()"><i class="glyphicon glyphicon-check"></i>儲存</button>
+                    </div>*@
+            </div>
+            
+        </div>
+        <div ng-show="isDetail">
+            <div class="col-md-4">
+                <label class="text">員工編號 :</label>
+                <label class="text" ng-bind="EmployeeID"></label>
+            </div>
+            <div class="col-md-4">
+                <label class="text">員工名稱 :</label>
+                <label class="text" ng-bind="EmpName"></label>
+            </div>
+            <div class="col-md-4">
+                <label class="text">居住地 :</label>
+                <label class="text" ng-bind="Country"></label>
+            </div>
+            <div class="col-md-4">
+                <label class="text">職稱 :</label>
+                <label class="text" ng-bind="Title"></label>
+            </div>
+        </div>
+        <div class="panel-footer text-center" ng-show="isDetail">
+            <button class="btn btn-primary btn-flat" style="margin-right: 3%" ng-click="clear()"><i class="glyphicon glyphicon-check"></i>清空</button>
+        </div>
+    </div>
+    
+</section>
