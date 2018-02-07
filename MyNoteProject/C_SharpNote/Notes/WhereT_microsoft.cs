@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C_SharpNote
+namespace C_SharpNote.Notes
 {
     /// <summary>
     /// 類型參數的條件約束

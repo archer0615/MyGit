@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C_SharpNote
+namespace C_SharpNote.Notes
 {
     public static class DataProcess
     {
@@ -19,6 +19,7 @@ namespace C_SharpNote
                 Console.WriteLine($"字元連續出現最多的為 : {item.Key} 次數 : {item.Value}");
             }
         }
+
         private static Dictionary<string, int> StringFound(string data)
         {
             var stringArr = data.ToCharArray();

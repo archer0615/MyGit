@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using C_SharpNote.EnumHelper;
 
 namespace C_SharpNote
 {
-    class Program
+    public interface IProcess
     {
-        static void Main(string[] args)
-        {
-
-        }
+        void RunMain();
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C_SharpNote
+namespace C_SharpNote.Notes
 {
     /// <summary>
     /// [C#] 泛型的條件約束 Constraints
