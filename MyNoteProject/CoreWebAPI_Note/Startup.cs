@@ -24,6 +24,11 @@ namespace CoreWebAPI_Note
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://google.com"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +38,7 @@ namespace CoreWebAPI_Note
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseMvc();
         }
