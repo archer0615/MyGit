@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeHelper\CheckSessionFilterAttribute.cs" />
+    <Compile Include="Compare\MyCompare.cs" />
     <Compile Include="HashPassword\Excute.cs" />
     <Compile Include="Notes\BinarySearch.cs" />
     <Compile Include="Notes\DataProcess.cs" />
