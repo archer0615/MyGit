@@ -1,6 +1,0 @@
-                    var strItem = '';
-                    var data = response.Data.serveList;
-                    for (var i = 0; i < data.length; i++) {
-                        strItem = ('{ "text": "' + data[i].ServeId'", "value" : "' + data[i].ServeId + '" }');
-
-                    }
