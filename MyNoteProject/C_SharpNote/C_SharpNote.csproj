@@ -79,6 +79,7 @@
     <Compile Include="Notes\MathRoundBug.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection2_SQL\ReflectionProgram.cs" />
     <Compile Include="SampleReflection\SmpleReflection.cs" />
     <Compile Include="Notes\StringReverse.cs" />
     <Compile Include="Notes\WhereT_dotblogs.cs" />
