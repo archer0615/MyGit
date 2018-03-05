@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AngleSharpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_Category">
+          <Key>
+            <PropertyRef Name="Catetory_ID" />
+          </Key>
+          <Property Name="Catetory_ID" Type="int" Nullable="false" />
+          <Property Name="Catetory_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Catetory_Se_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="T_SE">
+          <Key>
+            <PropertyRef Name="Se_ID" />
+          </Key>
+          <Property Name="Se_ID" Type="int" Nullable="false" />
+          <Property Name="Se_Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="T_Stock">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Stock_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Stock_Url" Type="nvarchar(max)" />
+          <Property Name="Stock_Catetory_ID" Type="int" />
+        </EntityType>
+        <EntityContainer Name="AngleSharpModelStoreContainer">
+          <EntitySet Name="T_Category" EntityType="Self.T_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SE" EntityType="Self.T_SE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Stock" EntityType="Self.T_Stock" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AngleSharpModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_Category">
+          <Key>
+            <PropertyRef Name="Catetory_ID" />
+          </Key>
+          <Property Name="Catetory_ID" Type="Int32" Nullable="false" />
+          <Property Name="Catetory_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Catetory_Se_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="T_SE">
+          <Key>
+            <PropertyRef Name="Se_ID" />
+          </Key>
+          <Property Name="Se_ID" Type="Int32" Nullable="false" />
+          <Property Name="Se_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_Stock">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Stock_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Stock_Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Stock_Catetory_ID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="AngleSharpEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Category" EntityType="Self.T_Category" />
+          <EntitySet Name="T_SE" EntityType="Self.T_SE" />
+          <EntitySet Name="T_Stock" EntityType="Self.T_Stock" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AngleSharpModelStoreContainer" CdmEntityContainer="AngleSharpEntities">
+          <EntitySetMapping Name="T_Category">
+            <EntityTypeMapping TypeName="AngleSharpModel.T_Category">
+              <MappingFragment StoreEntitySet="T_Category">
+                <ScalarProperty Name="Catetory_ID" ColumnName="Catetory_ID" />
+                <ScalarProperty Name="Catetory_Name" ColumnName="Catetory_Name" />
+                <ScalarProperty Name="Catetory_Se_ID" ColumnName="Catetory_Se_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SE">
+            <EntityTypeMapping TypeName="AngleSharpModel.T_SE">
+              <MappingFragment StoreEntitySet="T_SE">
+                <ScalarProperty Name="Se_ID" ColumnName="Se_ID" />
+                <ScalarProperty Name="Se_Name" ColumnName="Se_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Stock">
+            <EntityTypeMapping TypeName="AngleSharpModel.T_Stock">
+              <MappingFragment StoreEntitySet="T_Stock">
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+                <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
+                <ScalarProperty Name="Stock_Url" ColumnName="Stock_Url" />
+                <ScalarProperty Name="Stock_Catetory_ID" ColumnName="Stock_Catetory_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

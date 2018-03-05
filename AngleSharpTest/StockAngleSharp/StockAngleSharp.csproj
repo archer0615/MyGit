@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>StockAngleSharp</RootNamespace>
     <AssemblyName>StockAngleSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -91,6 +91,7 @@
     <Compile Include="Models\DTOs\T_CategoryModel.cs" />
     <Compile Include="Models\DTOs\T_StockModel.cs" />
     <Compile Include="Models\Interfaces\IRepository.cs" />
+    <Compile Include="Models\Repositorys\CategoryRepository.cs" />
     <Compile Include="Models\Repositorys\GenericRepository.cs" />
     <Compile Include="Models\Repositorys\StockRepository.cs" />
     <Compile Include="Models\Selectors\CategroySelector.cs" />
@@ -102,10 +103,8 @@
     <Compile Include="Service\BaseStockService.cs" />
     <Compile Include="Service\CrawlerStock.cs" />
     <Compile Include="Service\CrawlerStockCategoryService.cs" />
-    <Compile Include="Service\T_CategoryService.cs" />
     <Compile Include="Service\T_StockService.cs" />
     <Compile Include="URL\CrawlerURL.cs" />
-    <Compile Include="ViewModel\StockViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

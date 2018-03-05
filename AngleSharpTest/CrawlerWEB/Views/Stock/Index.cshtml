@@ -1,0 +1,8 @@
+﻿@model IEnumerable<CrawlerWEB.ViewModels.CategoryViewModel>
+@{
+        Layout = null;
+}
+@foreach (var item in Model)
+{
+    <h6>@item.CategoryName</h6>
+}
