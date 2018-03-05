@@ -21,5 +21,7 @@ namespace StockAngleSharp.URL
 
         #endregion
         public const string yahooStockURL = @"https://tw.stock.yahoo.com/";
+        public const string categoryURL = @"https://tw.stock.yahoo.com/h/kimosel.php?";
+        public const string stockURL = @"https://tw.stock.yahoo.com/q/q?s=";
     }
 }

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>StockAngleSharp</RootNamespace>
     <AssemblyName>StockAngleSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -39,8 +39,20 @@
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.9.1\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.13\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,18 +61,86 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\StockCompany.cs" />
-    <Compile Include="Models\StockSelector.cs" />
+    <Compile Include="Enums\StockEnum.cs" />
+    <Compile Include="Extension\ReplaceOther.cs" />
+    <Compile Include="Facades\DownloadStockFacade.cs" />
+    <Compile Include="Models\DB\AngleSharpStock.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AngleSharpStock.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\AngleSharpStock.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\AngleSharpStock.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\T_Category.cs">
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\T_SE.cs">
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\T_Stock.cs">
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DTOs\T_CategoryModel.cs" />
+    <Compile Include="Models\DTOs\T_StockModel.cs" />
+    <Compile Include="Models\Interfaces\IRepository.cs" />
+    <Compile Include="Models\Repositorys\GenericRepository.cs" />
+    <Compile Include="Models\Repositorys\StockRepository.cs" />
+    <Compile Include="Models\Selectors\CategroySelector.cs" />
+    <Compile Include="Models\Selectors\CompanySelector.cs" />
+    <Compile Include="Models\DTOs\StockCompany.cs" />
+    <Compile Include="Models\Selectors\StockSelector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BaseStockService.cs" />
     <Compile Include="Service\CrawlerStock.cs" />
+    <Compile Include="Service\CrawlerStockCategoryService.cs" />
+    <Compile Include="Service\T_CategoryService.cs" />
+    <Compile Include="Service\T_StockService.cs" />
     <Compile Include="URL\CrawlerURL.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\DB\AngleSharpStock.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AngleSharpStock.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\DB\AngleSharpStock.edmx.diagram">
+      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Models\DB\AngleSharpStock.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
+      <LastGenOutput>AngleSharpStock.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DB\AngleSharpStock.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
+      <LastGenOutput>AngleSharpStock.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

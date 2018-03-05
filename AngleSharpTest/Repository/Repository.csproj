@@ -11,6 +11,7 @@
     <AssemblyName>Repository</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,50 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AngleSharpRepository.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AngleSharpRepository.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AngleSharpRepository.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AngleSharpRepository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AngleSharpRepository.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AngleSharpRepository.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stock.cs">
-      <DependentUpon>AngleSharpRepository.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="AngleSharpRepository.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AngleSharpRepository.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AngleSharpRepository.edmx.diagram">
-      <DependentUpon>AngleSharpRepository.edmx</DependentUpon>
-    </None>
     <None Include="App.Config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AngleSharpRepository.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AngleSharpRepository.Context.cs</LastGenOutput>
-      <DependentUpon>AngleSharpRepository.edmx</DependentUpon>
-    </Content>
-    <Content Include="AngleSharpRepository.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AngleSharpRepository.edmx</DependentUpon>
-      <LastGenOutput>AngleSharpRepository.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

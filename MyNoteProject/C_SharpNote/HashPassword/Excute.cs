@@ -10,25 +10,31 @@ namespace C_SharpNote.HashPassword
 {
     public class Excute
     {
-        private static void ConvertPwd()
+        public static void ConvertPwd()
         {
             string path = Directory.GetCurrentDirectory();
             FileStream fileStream = new FileStream(path + "\\password.txt", FileMode.Create);
             fileStream.Close();
             string password = "013";
             string input = string.Empty;
+            Console.WriteLine("輸入-1 結束程式");
             using (StreamWriter sw = new StreamWriter(path + "\\password.txt"))
             {
                 do
                 {
+                    input = string.Empty;
                     Console.WriteLine();
-                    Console.WriteLine("請輸入密碼");
+                    Console.WriteLine("請輸入密碼 範例格式 0010001");
                     Console.WriteLine();
                     input = Console.ReadLine();
-                    password += input;
-                    Console.WriteLine(password);
-                    sw.WriteLine(input + "            " + CSharpHash(password));
-                    password = "009";
+                    //password += input;
+                    //Console.WriteLine(password);
+                    if (input != "-1")
+                    {
+                        sw.WriteLine("密碼: " + input + "            " + "加密後: " + CSharpHash(input));
+                    }
+                    //password = "009";
+
                 } while (input != "-1");
                 sw.Close();
             }

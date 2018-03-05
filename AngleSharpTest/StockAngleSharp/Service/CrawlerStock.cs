@@ -1,5 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
+using StockAngleSharp.Enums;
+using StockAngleSharp.Extension;
 using StockAngleSharp.Models;
 using StockAngleSharp.URL;
 using StockAngleSharp.ViewModel;
@@ -16,19 +18,14 @@ namespace StockAngleSharp.Service
     public class CrawlerStock
     {
         private const string yahooStockURL = CrawlerURL.yahooStockURL;
-
-        public void GetStockByCategory()
-        {
-            //選擇類別
-            string categoryURL = @"https://tw.stock.yahoo.com/h/kimosel.php" + "?tse=1&cat=%E6%B0%B4%E6%B3%A5&" + "form=menu&form_id=stock_id&form_name=stock_name&domain=0";
-
-        }
+        private const string categoryURL = CrawlerURL.categoryURL;
+        private IConfiguration config = Configuration.Default.WithDefaultLoader();
 
         public StockViewModel GetStockById(int id)
         {
             var URL_Id = id.ToString().PadLeft(4, '0');
             StockViewModel stockVM = new StockViewModel() { StockID = URL_Id };
-            var config = Configuration.Default.WithDefaultLoader();
+
             string URL = "q/q?s=" + URL_Id;
             var dom = BrowsingContext.New(config).OpenAsync(yahooStockURL + URL).Result;
 
@@ -86,9 +83,6 @@ namespace StockAngleSharp.Service
 
             return stockVM;
         }
-        //public List<StockViewModel> GetData()
-        //{
 
-        //}
     }
 }
