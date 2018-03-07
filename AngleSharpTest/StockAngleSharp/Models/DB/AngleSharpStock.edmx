@@ -27,12 +27,27 @@
           <Property Name="Stock_ID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Stock_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Stock_Url" Type="nvarchar(max)" />
-          <Property Name="Stock_Catetory_ID" Type="int" />
+          <Property Name="Stock_Catetory_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_StockCompany">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Company_Url" Type="nvarchar(max)" />
+          <Property Name="Catetory_ID" Type="int" />
+          <Property Name="CompanyCreateDate" Type="nvarchar" MaxLength="10" />
+          <Property Name="StockCreateDate" Type="nvarchar" MaxLength="10" />
+          <Property Name="Stock_Capital" Type="nvarchar" MaxLength="20" />
+          <Property Name="Revenue" Type="nvarchar(max)" />
+          <Property Name="Company_Official_Url" Type="nvarchar" MaxLength="100" />
+          <Property Name="Company_Fatory" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="AngleSharpModelStoreContainer">
           <EntitySet Name="T_Category" EntityType="Self.T_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_SE" EntityType="Self.T_SE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Stock" EntityType="Self.T_Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_StockCompany" EntityType="Self.T_StockCompany" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -57,6 +72,7 @@
           <EntitySet Name="T_Category" EntityType="Self.T_Category" />
           <EntitySet Name="T_SE" EntityType="Self.T_SE" />
           <EntitySet Name="T_Stock" EntityType="AngleSharpModel.T_Stock" />
+          <EntitySet Name="T_StockCompany" EntityType="AngleSharpModel.T_StockCompany" />
         </EntityContainer>
         <EntityType Name="T_Stock">
           <Key>
@@ -65,7 +81,21 @@
           <Property Name="Stock_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Stock_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Stock_Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Stock_Catetory_ID" Type="Int32" />
+          <Property Name="Stock_Catetory_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_StockCompany">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Company_Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Catetory_ID" Type="Int32" />
+          <Property Name="CompanyCreateDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StockCreateDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Stock_Capital" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Revenue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Company_Official_Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Company_Fatory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -96,6 +126,21 @@
                 <ScalarProperty Name="Stock_Catetory_ID" ColumnName="Stock_Catetory_ID" />
                 <ScalarProperty Name="Stock_Url" ColumnName="Stock_Url" />
                 <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_StockCompany">
+            <EntityTypeMapping TypeName="AngleSharpModel.T_StockCompany">
+              <MappingFragment StoreEntitySet="T_StockCompany">
+                <ScalarProperty Name="Company_Fatory" ColumnName="Company_Fatory" />
+                <ScalarProperty Name="Company_Official_Url" ColumnName="Company_Official_Url" />
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+                <ScalarProperty Name="Stock_Capital" ColumnName="Stock_Capital" />
+                <ScalarProperty Name="StockCreateDate" ColumnName="StockCreateDate" />
+                <ScalarProperty Name="CompanyCreateDate" ColumnName="CompanyCreateDate" />
+                <ScalarProperty Name="Catetory_ID" ColumnName="Catetory_ID" />
+                <ScalarProperty Name="Company_Url" ColumnName="Company_Url" />
                 <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
               </MappingFragment>
             </EntityTypeMapping>

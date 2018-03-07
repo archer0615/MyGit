@@ -17,6 +17,6 @@ namespace StockAngleSharp.Models.DB
         public string Stock_ID { get; set; }
         public string Stock_Name { get; set; }
         public string Stock_Url { get; set; }
-        public Nullable<int> Stock_Catetory_ID { get; set; }
+        public int Stock_Catetory_ID { get; set; }
     }
 }

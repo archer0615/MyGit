@@ -13,7 +13,7 @@ namespace StockAngleSharp.Models.Repositorys
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private DbContext _context { get; set; }
+        protected DbContext _context { get; set; }
         public GenericRepository() : this(new AngleSharpEntities())
         {
         }

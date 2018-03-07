@@ -76,6 +76,9 @@
     <Compile Include="T_Stock.cs">
       <DependentUpon>AngleSharpStock.tt</DependentUpon>
     </Compile>
+    <Compile Include="T_StockCompany.cs">
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="AngleSharpStock.edmx">

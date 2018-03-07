@@ -1,0 +1,145 @@
+﻿@using CrawlerWEB.Htmlhelper;
+@model CrawlerWEB.ViewModels.CategoryStockViewModel
+@{
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+@section CSS{
+    <style>
+        tr > th {
+            text-align: center;
+        }
+
+        tr > td {
+            text-align: center;
+        }
+
+        .AsyncPrice {
+            text-align: right !important;
+        }
+    </style>
+}
+<!--類別-->
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    @Html.Action("CategoryListPartial", "Category")
+</div>
+<!--類別明細-->
+<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>代號</th>
+                <th>名稱</th>
+                <th>波動</th>
+                <th>明細</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.StockList)
+            {
+                <tr>
+                    <td>@item.StockID</td>
+                    <td>
+                        <a href="@item.StockURL">@item.StockName</a>
+                    </td>
+                    <td>
+                        <div class="AsyncPrice" data-id="@item.StockID">
+                            <label class="Price" style="color:black"></label>
+                        </div>
+                    </td>
+                    <td><a href="#" class="btn btn-default" onclick="BindDatail(@item.StockID)">明細</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="BindDetail" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>代號</td>
+                <td id="Stock_ID"></td>
+                <td>網址</td>
+                <td><a id="Company_Official_Url" href="#">官網</a></td>
+            </tr>
+            <tr>
+                <td>類別</td>
+                <td id="Catetory_Name"></td>
+                <td>資本</td>
+                <td id="Stock_Capital"></td>
+            </tr>
+            <tr>
+                <td>創立時間</td>
+                <td id="CompanyCreateDate"></td>
+                <td>上市時間</td>
+                <td id="StockCreateDate"></td>
+            </tr>
+            <tr>
+                <td>營收</td>
+                <td colspan="3" rowspan="2" id="Revenue"></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>工廠</td>
+                <td colspan="3" rowspan="2" id="Company_Fatory"></td>
+            </tr>
+            <tr></tr>
+        </tbody>
+    </table>
+</div>
+
+@section JS{
+    <script>
+        $(function () {
+            GetPriceAsync();
+            Run();
+        });
+
+        function Run() {
+            setInterval(GetPriceAsync, 5000);
+        }
+
+        $('#BindDetail').hide();
+
+        function GetPriceAsync() {
+            var url = "@Url.Action("StockPriceNowAsync", "Stock")";
+
+            $('.AsyncPrice').each(function () {
+                var stock_id = $(this).attr('data-id');
+                var thisTag = $(this);
+                //thisTag.empty();
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: { "stock_Id": stock_id },
+                    dataType: "json",
+                    success: function (response) {
+                        $(thisTag.children()).text(response.Price).attr('style', 'color:' + response.Color);
+                        //thisTag.html(response);
+                    }
+                });
+            })
+        }
+
+        function BindDatail(stock_id) {
+            var url = "@Url.Action("Company_AjaxParital", "Stock")";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    $('#Stock_ID').text(response.Stock_ID);
+                    $('#Catetory_Name').text(response.Catetory_Name);
+                    $('#Company_Official_Url').attr('href', response.Company_Official_Url);
+                    $('#CompanyCreateDate').text(response.CompanyCreateDate);
+                    $('#StockCreateDate').text(response.StockCreateDate);
+                    $('#Stock_Capital').text(response.Stock_Capital);
+                    $('#Revenue').text(response.Revenue);
+                    $('#Company_Fatory').text(response.Company_Fatory);
+                    $('#Revenue').text(response.Revenue);
+                    $('#BindDetail').show();
+                },
+            });
+        }
+    </script>
+}

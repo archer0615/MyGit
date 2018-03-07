@@ -1,0 +1,18 @@
+﻿@model IEnumerable<CrawlerWEB.ViewModels.CategoryViewModel>
+
+@section CSS{
+    <style>
+        .cate {
+            padding: 5px 15px !important;
+        }
+    </style>
+    }
+
+@foreach (var item in Model)
+{
+    <a style="margin-bottom:3px;padding: 5px 15px;" class="cate list-group-item" id="Cate_@item.CategoryID"
+       href="@Url.Action("StockList","Category",new{id=item.CategoryID})">
+        @item.CategoryName
+        <span class="badge" data-cate="@item.CategoryID"></span>
+    </a>
+}

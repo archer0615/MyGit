@@ -1,4 +1,5 @@
-﻿using StockAngleSharp.Models.Repositorys;
+﻿using StockAngleSharp.Models.DB;
+using StockAngleSharp.Models.Repositorys;
 using StockAngleSharp.Service;
 using System;
 using System.Collections;
@@ -13,7 +14,7 @@ namespace StockAngleSharp
     {
         static void Main(string[] args)
         {
-
+          
         }
     }
 }

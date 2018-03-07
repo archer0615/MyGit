@@ -43,5 +43,27 @@ namespace StockAngleSharp.Service
 
             return results;
         }
+        public  string GetStockPriceNow(string stock_id)
+        {
+            string URL = stockURL + stock_id;
+            var dom =  BrowsingContext.New(config).OpenAsync(URL);// .Result;
+            
+            var selector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > td:nth-child(6) > font";
+            var data = dom.Result.QuerySelector(selector).TextContent ?? "";
+            if (!string.IsNullOrWhiteSpace(data))
+                data = data.Replace("\n", "").Trim();
+            return  data;
+        }
+        public async Task<string> GetStockPriceNowAsync(string stock_id)
+        {
+            string URL = stockURL + stock_id;
+            var dom = await BrowsingContext.New(config).OpenAsync(URL);// .Result;
+
+            var selector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > td:nth-child(6) > font";
+            var data = dom.QuerySelector(selector).TextContent ?? "";
+            if (!string.IsNullOrWhiteSpace(data))
+                data = data.Replace("\n", "").Trim();
+            return data;
+        }
     }
 }

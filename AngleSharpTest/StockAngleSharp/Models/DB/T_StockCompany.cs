@@ -7,16 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Repository
+namespace StockAngleSharp.Models.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Stock
+    public partial class T_StockCompany
     {
         public string Stock_ID { get; set; }
-        public string Stock_Name { get; set; }
-        public string Stock_Url { get; set; }
-        public int Stock_Catetory_ID { get; set; }
+        public string Company_Url { get; set; }
+        public Nullable<int> Catetory_ID { get; set; }
+        public string CompanyCreateDate { get; set; }
+        public string StockCreateDate { get; set; }
+        public string Stock_Capital { get; set; }
+        public string Revenue { get; set; }
+        public string Company_Official_Url { get; set; }
+        public string Company_Fatory { get; set; }
     }
 }

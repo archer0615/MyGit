@@ -28,5 +28,6 @@ namespace StockAngleSharp.Models.DB
         public virtual DbSet<T_Category> T_Category { get; set; }
         public virtual DbSet<T_SE> T_SE { get; set; }
         public virtual DbSet<T_Stock> T_Stock { get; set; }
+        public virtual DbSet<T_StockCompany> T_StockCompany { get; set; }
     }
 }

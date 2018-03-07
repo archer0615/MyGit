@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockAngleSharp.Models
+namespace StockAngleSharp.Models.ViewModels
 {
-    public class CompanySelector
+    public class CompanyViewModel
     {
         /// <summary>
         /// 公司創立時間
