@@ -1,10 +1,18 @@
 ﻿using AngleSharp;
+using AngleSharp.Dom.Html;
+using AngleSharp.Parser.Html;
+using AngleSharp.Xml;
+using CrawlerDAL.Selectors;
+using CrawlerDAL.ViewModels;
 using StockAngleSharp.Enums;
 using StockAngleSharp.Extension;
+using StockAngleSharp.Models;
 using StockAngleSharp.Models.DB;
 using StockAngleSharp.Models.DTOs;
+using StockAngleSharp.Models.Repositorys;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,27 +51,151 @@ namespace StockAngleSharp.Service
 
             return results;
         }
-        public  string GetStockPriceNow(string stock_id)
+        public string GetStockPriceNow(string stock_id)
         {
             string URL = stockURL + stock_id;
-            var dom =  BrowsingContext.New(config).OpenAsync(URL);// .Result;
-            
+            var dom = BrowsingContext.New(config).OpenAsync(URL);// .Result;
+
             var selector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > td:nth-child(6) > font";
             var data = dom.Result.QuerySelector(selector).TextContent ?? "";
             if (!string.IsNullOrWhiteSpace(data))
                 data = data.Replace("\n", "").Trim();
-            return  data;
+            return data;
         }
-        public async Task<string> GetStockPriceNowAsync(string stock_id)
+        public async Task<StockNowPriceViewModel> GetStockPriceNowAsync(string stock_id)
         {
+            StockNowPriceViewModel vm = new StockNowPriceViewModel();
             string URL = stockURL + stock_id;
             var dom = await BrowsingContext.New(config).OpenAsync(URL);// .Result;
 
-            var selector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > td:nth-child(6) > font";
-            var data = dom.QuerySelector(selector).TextContent ?? "";
-            if (!string.IsNullOrWhiteSpace(data))
-                data = data.Replace("\n", "").Trim();
-            return data;
+            var mainSelector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > ";
+
+            StockSelector stock = new StockSelector()
+            {
+                StockDeal = mainSelector + "td:nth-child(3)",
+                StockGainDrop = mainSelector + "td:nth-child(6) > font",
+            };
+            vm.Price = dom.QuerySelector(stock.StockDeal).TextContent ?? "";
+            vm.GainDrop = dom.QuerySelector(stock.StockGainDrop).TextContent ?? "";
+            if (!string.IsNullOrWhiteSpace(vm.GainDrop))
+                vm.GainDrop = vm.GainDrop.Replace("\n", "").Trim();
+
+            if (vm.GainDrop.Contains("△"))
+                vm.Color = "Red";
+            else if (vm.GainDrop.Contains("▽"))
+                vm.Color = "Green";
+            else
+                vm.Color = "Balck";
+
+            return vm;
+        }
+
+        public async Task<StockJuristicVeiwModel> GetStockJuristicAsync(string stock_id)
+        {
+            StockJuristicVeiwModel vm = new StockJuristicVeiwModel();
+            StockJuristicSelector selector = new StockJuristicSelector();
+
+            string URL = JuristicURL + stock_id + ".htm";
+
+            var dom = await BrowsingContext.New(config).OpenAsync(URL);// .Result;
+
+            var mainSelector = @"#main3 > div.mbx.bd3 > div.tabvl > table > tbody > ";
+
+            var flg = 2;
+            for (int tr = 0; tr < 5; tr++)
+            {
+                selector.Days.Add(new Juristic());
+                vm.Days.Add(new Juristic());
+
+                selector.Days[tr].JuristicDate = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(1)";
+                selector.Days[tr].Foreign = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(2)";
+                selector.Days[tr].Investment = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(3)";
+                selector.Days[tr].Self = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(4)";
+                selector.Days[tr].Total = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(5)";
+            }
+
+            for (int i = 0; i < vm.Days.Count; i++)
+            {
+                var newStockProp = TypeDescriptor.GetProperties(selector.Days[i]).Cast<PropertyDescriptor>();
+                var setStockProp = TypeDescriptor.GetProperties(vm.Days[i]).Cast<PropertyDescriptor>();
+
+                foreach (var prop in newStockProp)
+                {
+                    var selectorString = prop.GetValue(selector.Days[i]).ToString();
+                    var data = (Object)dom.QuerySelector(selectorString).TextContent ?? "";
+
+                    foreach (var item in setStockProp)
+                    {
+                        if (prop.Name == item.Name)
+                            vm.Days[i].GetType().GetProperty(item.Name).SetValue(vm.Days[i], data);
+                    }
+                }
+            }
+
+            return vm;
+        }
+
+        public async Task<Stock5DayGainDropViewModel> GetStockGainDrop5Day(string stock_id)
+        {
+            Stock5DayGainDropViewModel vm = new Stock5DayGainDropViewModel();
+            Stock5DayGainDropSelector selector = new Stock5DayGainDropSelector();
+
+            string URL = stock5DayGainDrop + stock_id + ".htm";
+
+            var dom = await BrowsingContext.New(config).OpenAsync(URL);// .Result;
+
+            var mainSelector = @"#main3 > div.mbx.bd3 > div.tab > table > tbody > ";
+
+            var flg = 2;
+            for (int tr = 0; tr < 5; tr++)
+            {
+                selector.Days.Add(new GainDrop());
+                vm.Days.Add(new GainDrop());
+                selector.Days[tr].GainDropDate = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(1)";
+                selector.Days[tr].Per = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(7)";
+            }
+
+            for (int i = 0; i < vm.Days.Count; i++)
+            {
+                var newStockProp = TypeDescriptor.GetProperties(selector.Days[i]).Cast<PropertyDescriptor>();
+                var setStockProp = TypeDescriptor.GetProperties(vm.Days[i]).Cast<PropertyDescriptor>();
+
+                foreach (var prop in newStockProp)
+                {
+                    var selectorString = prop.GetValue(selector.Days[i]).ToString();
+                    var data = (Object)dom.QuerySelector(selectorString).TextContent ?? "";
+
+                    foreach (var item in setStockProp)
+                    {
+                        if (prop.Name == item.Name)
+                            vm.Days[i].GetType().GetProperty(item.Name).SetValue(vm.Days[i], data);
+                    }
+                }
+            }
+
+            return vm;
+        }
+
+        public StockCompanyViewModel GetCompanyById(string Stock_Id)
+        {
+            StockCompanyRepository rep = new StockCompanyRepository();
+            var data = rep.Get(x => x.Stock_ID == Stock_Id);
+            return ConvertToViewModel(data);
+        }
+        private StockCompanyViewModel ConvertToViewModel(T_StockCompany data)
+        {
+            CategoryRepository cr = new CategoryRepository();
+            return new StockCompanyViewModel()
+            {
+                Stock_ID = data.Stock_ID,
+                Catetory_Name = cr.Get(x => x.Catetory_ID == data.Catetory_ID).Catetory_Name,
+                Company_Official_Url = data.Company_Official_Url,
+                CompanyCreateDate = data.CompanyCreateDate,
+                StockCreateDate = data.StockCreateDate,
+                Stock_Capital = data.Stock_Capital,
+                Revenue = data.Revenue,
+                Company_Fatory = data.Company_Fatory
+            };
         }
     }
 }

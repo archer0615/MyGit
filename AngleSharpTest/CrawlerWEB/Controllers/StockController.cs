@@ -1,5 +1,7 @@
-﻿using CrawlerWEB.Services;
-using CrawlerWEB.ViewModels;
+﻿using CrawlerDAL.ViewModels;
+using CrawlerWEB.Services;
+using StockAngleSharp.Models.Repositorys;
+using StockAngleSharp.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,41 +13,29 @@ namespace CrawlerWEB.Controllers
 {
     public class StockController : Controller
     {
-        public ActionResult StockPriceNow(string stock_id = "2002")
-        {
-            StockService ss = new StockService();
-            var data = ss.GetStockPriceNow(stock_id);
-            if (data.Contains("△"))
-                data = $"<label style='color:Red'>{data}</laebl>";
-            else if (data.Contains("▽"))
-                data = $"<label style='color:Green'>{data}</laebl>";
-            else
-                data = $"<label>{data}</laebl>";
-            return Content(data);
-        }
         public async Task<ActionResult> StockPriceNowAsync(string stock_id = "2002")
         {
-            StockService ss = new StockService();
-            var data = await ss.GetStockPriceNowAsync(stock_id);
-            StockNowPriceViewModel vm = new StockNowPriceViewModel() {
-                Price = data,
-            };
-            if (data.Contains("△"))
-                //$"<label class='Price' style='color:Red'>{data}</laebl>";
-                vm.Color = "Red";
-            else if (data.Contains("▽"))
-                //data = $"<label class='Price' style='color:Green'>{data}</laebl>";
-                vm.Color = "Green";
-            else
-                vm.Color = "Balck";
-                //data = $"<label class='Price' >{data}</laebl>";
+            T_StockService s = new T_StockService();
+            var vm = await s.GetStockPriceNowAsync(stock_id);
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+        public async Task<ActionResult> StockJuristicAsync(string stock_id = "2002")
+        {
+            T_StockService s = new T_StockService();
+            var vm = await s.GetStockJuristicAsync(stock_id);
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+        public async Task<ActionResult> StockGainDrop5DayAsync(string stock_id)
+        {
+            T_StockService s = new T_StockService();
+            var vm = await s.GetStockGainDrop5Day(stock_id);
             return Json(vm, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult Company_AjaxParital(string stock_Id = "2002")
         {
-            StockService ss = new StockService();
-            var data = ss.GetCompanyById(stock_Id);
+            T_StockService s = new T_StockService();
+            var data = s.GetCompanyById(stock_Id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
     }

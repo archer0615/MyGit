@@ -14,7 +14,8 @@ namespace StockAngleSharp
     {
         static void Main(string[] args)
         {
-          
+
         }
+
     }
 }

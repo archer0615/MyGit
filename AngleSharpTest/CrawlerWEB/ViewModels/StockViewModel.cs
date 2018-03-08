@@ -15,6 +15,7 @@ namespace CrawlerWEB.ViewModels
     public class StockNowPriceViewModel
     {
         public string Price { get; set; }
+        public string GainDrop { get; set; }
         public string Color { get; set; }
     }
 }

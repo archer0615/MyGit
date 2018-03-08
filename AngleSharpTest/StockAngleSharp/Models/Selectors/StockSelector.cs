@@ -57,4 +57,5 @@ namespace StockAngleSharp.Models
         /// </summary>
         public string StockDown { get; set; }
     }
+
 }

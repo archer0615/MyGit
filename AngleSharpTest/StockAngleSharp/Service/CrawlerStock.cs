@@ -1,10 +1,9 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
+using CrawlerDAL.ViewModels;
 using StockAngleSharp.Enums;
 using StockAngleSharp.Extension;
 using StockAngleSharp.Models;
-using StockAngleSharp.Models.ViewModels;
-using StockAngleSharp.URL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

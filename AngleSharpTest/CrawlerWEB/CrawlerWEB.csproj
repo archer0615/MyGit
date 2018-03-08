@@ -174,12 +174,6 @@
     </Compile>
     <Compile Include="Htmlhelper\MyAsyncPartial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CategoryService.cs" />
-    <Compile Include="Services\StockService.cs" />
-    <Compile Include="ViewModels\CategoryStockViewModel.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\StockCompanyViewModel.cs" />
-    <Compile Include="ViewModels\StockViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -202,6 +196,10 @@
     <Folder Include="Views\Stock\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrawlerDAL\CrawlerDAL.csproj">
+      <Project>{731f2bbb-f57d-4b5f-9da2-e6b2a3475888}</Project>
+      <Name>CrawlerDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StockAngleSharp\StockAngleSharp.csproj">
       <Project>{03059dcb-36eb-4009-9ab8-f6de62945139}</Project>
       <Name>StockAngleSharp</Name>

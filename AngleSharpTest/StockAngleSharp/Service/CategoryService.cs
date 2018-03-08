@@ -1,12 +1,13 @@
-﻿using CrawlerWEB.ViewModels;
+﻿using CrawlerDAL.ViewModels;
 using StockAngleSharp.Models.DB;
 using StockAngleSharp.Models.Repositorys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CrawlerWEB.Services
+namespace StockAngleSharp.Service
 {
     public class CategoryService
     {

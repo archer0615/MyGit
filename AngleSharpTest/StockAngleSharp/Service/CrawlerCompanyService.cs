@@ -1,6 +1,6 @@
 ﻿using AngleSharp;
+using CrawlerDAL.ViewModels;
 using StockAngleSharp.Models;
-using StockAngleSharp.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

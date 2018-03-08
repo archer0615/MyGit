@@ -1,5 +1,4 @@
-﻿@using CrawlerWEB.Htmlhelper;
-@model CrawlerWEB.ViewModels.CategoryStockViewModel
+﻿@model CrawlerDAL.ViewModels.CategoryStockViewModel
 @{
     Layout = "~/Views/_LayoutPage.cshtml";
 }
@@ -13,7 +12,13 @@
             text-align: center;
         }
 
-        .AsyncPrice {
+        .Price {
+            /*display: inline;*/
+            text-align: left !important;
+        }
+
+        .GainDrop {
+            /*display: inline;*/
             text-align: right !important;
         }
     </style>
@@ -29,7 +34,7 @@
             <tr>
                 <th>代號</th>
                 <th>名稱</th>
-                <th>波動</th>
+                <th colspan="2">成交 / 波動</th>
                 <th>明細</th>
             </tr>
         </thead>
@@ -41,9 +46,10 @@
                     <td>
                         <a href="@item.StockURL">@item.StockName</a>
                     </td>
-                    <td>
+                    <td colspan="2">
                         <div class="AsyncPrice" data-id="@item.StockID">
-                            <label class="Price" style="color:black"></label>
+                            <div class="Price"></div>
+                            <div class="GainDrop"></div>
                         </div>
                     </td>
                     <td><a href="#" class="btn btn-default" onclick="BindDatail(@item.StockID)">明細</a></td>
@@ -53,8 +59,26 @@
     </table>
 </div>
 <div id="BindDetail" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <!--近五日三大法人買賣超總表-->
+    <table class="table table-bordered table-hover" id="Juristic">
+        <tr>
+            <td colspan="6">近五日三大法人買賣超總表</td>
+        </tr>
+        <tr>
+            <td>日期</td>
+            <td>外資</td>
+            <td>投信</td>
+            <td>自營商</td>
+            <td>合計</td>
+            <td>漲跌%</td>
+        </tr>
+    </table>
+    <!--公司明細-->    
     <table class="table table-bordered">
         <tbody>
+            <tr>
+                <td colspan="4">公司明細</td>
+            </tr>
             <tr>
                 <td>代號</td>
                 <td id="Stock_ID"></td>
@@ -89,6 +113,10 @@
 
 @section JS{
     <script>
+        let url = "@Url.Action("Company_AjaxParital", "Stock")";
+        let JuristicUrl = "@Url.Action("StockJuristicAsync", "Stock")";
+        let gaindropUrl = "@Url.Action("StockGainDrop5DayAsync", "Stock")";
+
         $(function () {
             GetPriceAsync();
             Run();
@@ -98,7 +126,7 @@
             setInterval(GetPriceAsync, 5000);
         }
 
-        $('#BindDetail').hide();
+        $('#BindDetail,#Juristic').hide();
 
         function GetPriceAsync() {
             var url = "@Url.Action("StockPriceNowAsync", "Stock")";
@@ -106,22 +134,26 @@
             $('.AsyncPrice').each(function () {
                 var stock_id = $(this).attr('data-id');
                 var thisTag = $(this);
-                //thisTag.empty();
                 $.ajax({
                     type: "GET",
                     url: url,
                     data: { "stock_Id": stock_id },
                     dataType: "json",
                     success: function (response) {
-                        $(thisTag.children()).text(response.Price).attr('style', 'color:' + response.Color);
-                        //thisTag.html(response);
+                        var price = $(thisTag.children()).first();
+                        var gainDrop = $(thisTag.children()).last();
+                        if (price.text() != response.Price) {
+                            price.text(response.Price);
+                        }
+                        gainDrop.text(response.GainDrop).attr('style', 'color:' + response.Color);
                     }
                 });
             })
         }
 
         function BindDatail(stock_id) {
-            var url = "@Url.Action("Company_AjaxParital", "Stock")";
+            $('.total').remove();
+
             $.ajax({
                 type: "POST",
                 url: url,
@@ -138,7 +170,60 @@
                     $('#Company_Fatory').text(response.Company_Fatory);
                     $('#Revenue').text(response.Revenue);
                     $('#BindDetail').show();
+
+                    Juristic(stock_id);
                 },
+            });
+        }
+
+        function Juristic(stock_id) {
+            $.ajax({
+                type: "GET",
+                url: JuristicUrl,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    if (response.Days != null) {
+                        var dataList = response.Days;
+                        for (var i = 0; i < dataList.length; i++) {
+                            $('#Juristic').append('<tr class="total">' +
+                                                            '<td>' + dataList[i].JuristicDate + '</td>' +
+                                                            '<td>' + dataList[i].Foreign + '</td>' +
+                                                            '<td>' + dataList[i].Investment + '</td>' +
+                                                            '<td>' + dataList[i].Self + '</td>' +
+                                                            '<td>' + dataList[i].Total + '</td>' +
+                                                          '</tr>')
+                            $('#Juristic').show();
+                        }
+                        GainDropAjax(stock_id);
+                    }
+                }
+            });
+        }
+
+        function GainDropAjax(stock_id) {
+            $.ajax({
+                type: "GET",
+                url: gaindropUrl,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    if (response.Days != null) {
+                        var dataList = response.Days;
+                        for (var i = 0; i < dataList.length; i++) {//GainDropDate
+                            var thisPer = dataList[i].Per;
+                            if (thisPer.indexOf('0.00%') > -1) {
+                                $('.total:eq(' + i + ')').append('<td>' + thisPer + '</td>');
+                            }
+                            else if (thisPer.indexOf('-') == -1) {
+                                $('.total:eq(' + i + ')').append('<td style="color:Red">' + thisPer + '</td>');
+                            }
+                            else {
+                                $('.total:eq(' + i + ')').append('<td style="color:Green">' + thisPer + '</td>');
+                            }
+                        }
+                    }
+                }
             });
         }
     </script>
