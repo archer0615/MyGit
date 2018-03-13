@@ -142,7 +142,7 @@ namespace StockAngleSharp.Service
 
             string URL = stock5DayGainDrop + stock_id + ".htm";
 
-            var dom = await BrowsingContext.New(config).OpenAsync(URL);// .Result;
+            var dom = await BrowsingContext.New(config).OpenAsync(URL);
 
             var mainSelector = @"#main3 > div.mbx.bd3 > div.tab > table > tbody > ";
 
@@ -174,6 +174,81 @@ namespace StockAngleSharp.Service
             }
 
             return vm;
+        }
+
+        public async Task<AverageYieldViewModel> GetStockYields5Year(string stock_id)
+        {
+            //計算年數參數
+            var calcYear = 5;
+            var flg = 1;
+            AverageYieldViewModel TrueVm = new AverageYieldViewModel();
+
+            StockYieldsViewModel vm = new StockYieldsViewModel();
+            StockYieldsSelector selector = new StockYieldsSelector();
+
+            var URL = this.stockYieldsURL(stock_id);
+
+            var dom = await BrowsingContext.New(config).OpenAsync(URL);
+
+            var mainSelector = @"#mainCol > div.br-trl > table > tbody > ";
+
+            DateTime Now = DateTime.Now;
+
+            var indexMonth = Now.Month;
+
+            var trCount = 0;
+
+            var stopYear = Now.Year - calcYear;
+            for (int i = Now.Year; i >= stopYear; i--)
+            {
+                for (int j = indexMonth; j > 0; j--)
+                {
+                    trCount++;
+                }
+                indexMonth = 12;
+            }
+
+            for (int tr = 0; tr < trCount; tr++)
+            {
+                selector.Years.Add(new Yield());
+                vm.Years.Add(new Yield());
+
+                selector.Years[tr].YieldYear = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(1)";
+                selector.Years[tr].YieldRate = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(2)";
+                selector.Years[tr].MonthPrice = mainSelector + $"tr:nth-child({tr + flg}) > td:nth-child(3)";
+            }
+
+            for (int i = 0; i < vm.Years.Count; i++)
+            {
+                var newStockProp = TypeDescriptor.GetProperties(selector.Years[i]).Cast<PropertyDescriptor>();
+                var setStockProp = TypeDescriptor.GetProperties(vm.Years[i]).Cast<PropertyDescriptor>();
+                foreach (var prop in newStockProp)
+                {
+                    var selectorString = prop.GetValue(selector.Years[i]).ToString();
+                    var data = (Object)dom.QuerySelector(selectorString).TextContent ?? "";
+
+                    foreach (var item in setStockProp)
+                    {
+                        if (prop.Name == item.Name)
+                            vm.Years[i].GetType().GetProperty(item.Name).SetValue(vm.Years[i], data);
+                    }
+                }
+            }
+
+            var tmp = 0;
+            for (int year = Now.Year; year > Now.Year - calcYear; year--)
+            {
+                var dataList = vm.Years.Where(x => x.YieldYear.Substring(0, 4) == year.ToString()).ToList();
+                TrueVm.Years.Add(new AverageYield() { Year = year.ToString() });
+                for (int i = 0; i < dataList.Count(); i++)
+                {
+                    TrueVm.Years[tmp].Price.Add(Convert.ToDouble(dataList[i].MonthPrice));
+                    TrueVm.Years[tmp].Rate.Add(Convert.ToDouble(dataList[i].YieldRate));
+                }
+                tmp++;
+            }
+
+            return TrueVm;
         }
 
         public StockCompanyViewModel GetCompanyById(string Stock_Id)

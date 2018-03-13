@@ -30,6 +30,12 @@ namespace CrawlerWEB.Controllers
             var vm = await s.GetStockGainDrop5Day(stock_id);
             return Json(vm, JsonRequestBehavior.AllowGet);
         }
+        public async Task<ActionResult> StockYields5YearAsync(string stock_id)
+        {
+            T_StockService s = new T_StockService();
+            var vm = await s.GetStockYields5Year(stock_id);
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult Company_AjaxParital(string stock_Id = "2002")
         {

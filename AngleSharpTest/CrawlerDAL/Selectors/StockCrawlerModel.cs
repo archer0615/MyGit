@@ -25,4 +25,11 @@ namespace CrawlerDAL.Selectors
             Days = new List<GainDrop>();
         }
     }
+    public class StockYieldsSelector : YearModel<Yield>
+    {
+        public StockYieldsSelector()
+        {
+            Years = new List<Yield>();
+        }
+    }
 }

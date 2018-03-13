@@ -14,6 +14,19 @@ namespace StockAngleSharp
     {
         static void Main(string[] args)
         {
+            //try
+            //{
+            //    T_StockService ts = new T_StockService();
+            //    var vm = ts.GetStockYields5Year("2002");
+            //    foreach (var item in vm.Result.Years)
+            //    {
+            //        Console.WriteLine(item.ToString());
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
 
         }
 

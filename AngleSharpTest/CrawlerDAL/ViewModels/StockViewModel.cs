@@ -33,13 +33,17 @@ namespace CrawlerDAL.ViewModels
         public string StockTop { get; set; }
         public string StockDown { get; set; }
     }
-    public  abstract class Day5Model<T>
+    public abstract class Day5Model<T>
     {
         public virtual List<T> Days { get; set; }
     }
+    public abstract class YearModel<T>
+    {
+        public virtual List<T> Years { get; set; }
+    }
     public class Stock5DayGainDropViewModel : Day5Model<GainDrop>
     {
-        
+
         public Stock5DayGainDropViewModel()
         {
             Days = new List<GainDrop>();
@@ -47,10 +51,21 @@ namespace CrawlerDAL.ViewModels
     }
     public class StockJuristicVeiwModel : Day5Model<Juristic>
     {
-        public StockJuristicVeiwModel()
-        {
-            Days = new List<Juristic>();
-        }
+        public StockJuristicVeiwModel() { Days = new List<Juristic>(); }
+    }
+    public class StockYieldsViewModel : YearModel<Yield>
+    {
+        public StockYieldsViewModel() { Years = new List<Yield>(); }
+    }
+    public class AverageYieldViewModel : YearModel<AverageYield>
+    {
+        public AverageYieldViewModel() { Years = new List<AverageYield>(); }
+    }
+    public class Yield
+    {
+        public string YieldYear { get; set; }
+        public string YieldRate { get; set; }
+        public string MonthPrice { get; set; }   
     }
     public class GainDrop
     {
@@ -64,5 +79,33 @@ namespace CrawlerDAL.ViewModels
         public string Investment { get; set; }
         public string Self { get; set; }
         public string Total { get; set; }
+    }
+    public class AverageYield
+    {
+        public AverageYield()
+        {
+            Rate = new List<double>();
+            Price = new List<double>();
+        }
+        public string Year { get; set; }
+        public List<double> Rate { get; set; }
+        public List<double> Price { get; set; }
+        public string AverageRate { get { return this.GetAverageRate(); } }
+        public string AveragePrice { get { return this.GetAveragePrice(); } }
+        public string GetAverageRate()
+        {
+            if (Rate.Count > 0)
+                return Math.Round(Rate.Sum() / Rate.Count, 2).ToString();
+            else
+                return "0";
+
+        }
+        public string GetAveragePrice()
+        {
+            if (Price.Count > 0)
+                return Math.Round(Price.Sum() / Price.Count, 2).ToString();
+            else
+                return "0.00";
+        }        
     }
 }

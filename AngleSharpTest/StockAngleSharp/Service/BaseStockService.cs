@@ -27,7 +27,11 @@ namespace StockAngleSharp.Service
 
         public const string JuristicURL = @"https://www.cnyes.com/twstock/Institutional/";
         public const string stock5DayGainDrop = @"https://www.cnyes.com/twstock/ps_historyprice/";
-
+        public string stockYieldsURL(string stock_id)
+        {
+            return $"https://www.wantgoo.com/stock/report/value?stockno={stock_id}&types=3";
+        }
         public IConfiguration config = Configuration.Default.WithDefaultLoader();
+        
     }
 }

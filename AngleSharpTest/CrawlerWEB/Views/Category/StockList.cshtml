@@ -73,7 +73,18 @@
             <td>漲跌%</td>
         </tr>
     </table>
-    <!--公司明細-->    
+    <!--近五年平均殖利率/平均股價-->
+    <table class="table table-bordered table-hover" id="AverageYield">
+        <tr>
+            <td colspan="3">近五年平均殖利率/平均股價</td>
+        </tr>
+        <tr>
+            <td>年份</td>
+            <td>平均殖利率</td>
+            <td>平均股價</td>
+        </tr>
+    </table>
+    <!--公司明細-->
     <table class="table table-bordered">
         <tbody>
             <tr>
@@ -116,6 +127,7 @@
         let url = "@Url.Action("Company_AjaxParital", "Stock")";
         let JuristicUrl = "@Url.Action("StockJuristicAsync", "Stock")";
         let gaindropUrl = "@Url.Action("StockGainDrop5DayAsync", "Stock")";
+        let yieldUrl = "@Url.Action("StockYields5YearAsync", "Stock")";
 
         $(function () {
             GetPriceAsync();
@@ -126,7 +138,7 @@
             setInterval(GetPriceAsync, 5000);
         }
 
-        $('#BindDetail,#Juristic').hide();
+        $('#BindDetail,#Juristic', '#AverageYield').hide();
 
         function GetPriceAsync() {
             var url = "@Url.Action("StockPriceNowAsync", "Stock")";
@@ -172,11 +184,13 @@
                     $('#BindDetail').show();
 
                     Juristic(stock_id);
+                    AverageYield(stock_id);
                 },
             });
         }
 
         function Juristic(stock_id) {
+            var tb_Juristic = $('#Juristic');
             $.ajax({
                 type: "GET",
                 url: JuristicUrl,
@@ -186,14 +200,19 @@
                     if (response.Days != null) {
                         var dataList = response.Days;
                         for (var i = 0; i < dataList.length; i++) {
-                            $('#Juristic').append('<tr class="total">' +
-                                                            '<td>' + dataList[i].JuristicDate + '</td>' +
-                                                            '<td>' + dataList[i].Foreign + '</td>' +
-                                                            '<td>' + dataList[i].Investment + '</td>' +
-                                                            '<td>' + dataList[i].Self + '</td>' +
-                                                            '<td>' + dataList[i].Total + '</td>' +
-                                                          '</tr>')
-                            $('#Juristic').show();
+                            var td_JuristicDate = $('<td></td>').text(dataList[i].JuristicDate);
+                            var td_Foreign = $('<td></td>').text(dataList[i].Foreign);
+                            var td_Investment = $('<td></td>').text(dataList[i].Investment);
+                            var td_Self = $('<td></td>').text(dataList[i].Self);
+                            var td_Total = $('<td></td>').text(dataList[i].Total);
+
+                            var tr = $('<tr></tr>').addClass('total').append(td_JuristicDate,
+                                                                                                    td_Foreign,
+                                                                                                    td_Investment,
+                                                                                                    td_Self,
+                                                                                                    td_Total)
+                            tb_Juristic.append(tr);
+                            tb_Juristic.show();
                         }
                         GainDropAjax(stock_id);
                     }
@@ -212,15 +231,44 @@
                         var dataList = response.Days;
                         for (var i = 0; i < dataList.length; i++) {//GainDropDate
                             var thisPer = dataList[i].Per;
-                            if (thisPer.indexOf('0.00%') > -1) {
-                                $('.total:eq(' + i + ')').append('<td>' + thisPer + '</td>');
+                            var thisTd = $('<td></td>').text(thisPer);
+                            var thisTr = $('.total:eq(' + i + ')');
+
+                            if (thisPer.search('0.00%') == 0) {
+                                thisTr.append(thisTd);
                             }
-                            else if (thisPer.indexOf('-') == -1) {
-                                $('.total:eq(' + i + ')').append('<td style="color:Red">' + thisPer + '</td>');
+                            else if (thisPer.search('-') == 0) {
+                                thisTr.append(thisTd.attr('style', 'color:Green'));
                             }
                             else {
-                                $('.total:eq(' + i + ')').append('<td style="color:Green">' + thisPer + '</td>');
+                                thisTr.append(thisTd.attr('style', 'color:Red'));
                             }
+                        }
+                    }
+                }
+            });
+        }
+
+        function AverageYield(stock_id) {
+            var tb_AverageYield = $('#AverageYield');
+
+            $.ajax({
+                type: "GET",
+                url: yieldUrl,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    if (response.Years != null) {
+                        var dataList = response.Years;
+                        for (var i = 0; i < dataList.length; i++) {
+                            var td_year = $('<td></td>').text(dataList[i].Year);
+                            var td_rate = $('<td></td>').text(dataList[i].AverageRate);
+                            var td_price = $('<td></td>').text(dataList[i].AveragePrice);
+
+                            var tr = $('<tr></tr>').addClass('total').append(td_year, td_rate, td_price);
+                            tb_AverageYield.append(tr);
+
+                            tb_AverageYield.show();
                         }
                     }
                 }
