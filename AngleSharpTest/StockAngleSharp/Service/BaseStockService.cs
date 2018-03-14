@@ -32,6 +32,5 @@ namespace StockAngleSharp.Service
             return $"https://www.wantgoo.com/stock/report/value?stockno={stock_id}&types=3";
         }
         public IConfiguration config = Configuration.Default.WithDefaultLoader();
-        
     }
 }

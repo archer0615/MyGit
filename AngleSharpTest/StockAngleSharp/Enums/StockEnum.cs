@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace StockAngleSharp.Enums
 {
+    public enum CrawlerURL
+    {
+        StockPriceNow=0,
+        StockJuristic,
+        GainDrop5Day,
+        Yields5Year,
+
+    }
     /// <summary>
     /// 上市/上櫃
     /// </summary>

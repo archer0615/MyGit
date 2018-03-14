@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ISelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Selectors\StockCrawlerModel.cs" />
+    <Compile Include="Selectors\CategroySelector.cs" />
+    <Compile Include="Selectors\CompanySelector.cs" />
+    <Compile Include="Selectors\SelectorModel.cs" />
+    <Compile Include="Selectors\StockSelector.cs" />
     <Compile Include="ViewModels\CategoryStockViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />

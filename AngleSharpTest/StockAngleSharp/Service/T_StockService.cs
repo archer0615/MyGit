@@ -70,7 +70,7 @@ namespace StockAngleSharp.Service
 
             var mainSelector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > ";
 
-            StockSelector stock = new StockSelector()
+            StockSelector stock = new StockSelector(mainSelector)
             {
                 StockDeal = mainSelector + "td:nth-child(3)",
                 StockGainDrop = mainSelector + "td:nth-child(6) > font",

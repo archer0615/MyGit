@@ -1,13 +1,19 @@
-﻿using System;
+﻿using CrawlerDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockAngleSharp.Models
+namespace CrawlerDAL.Selectors
 {
-    public class CompanySelector
+    public class CompanySelector : ISelector
     {
+        public string mainSelector { get; set; }
+        public CompanySelector(string _mainSelector)
+        {
+            mainSelector = _mainSelector;
+        }
         /// <summary>
         /// 公司創立時間
         /// </summary>

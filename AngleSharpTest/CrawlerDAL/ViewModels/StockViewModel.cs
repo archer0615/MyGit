@@ -65,7 +65,7 @@ namespace CrawlerDAL.ViewModels
     {
         public string YieldYear { get; set; }
         public string YieldRate { get; set; }
-        public string MonthPrice { get; set; }   
+        public string MonthPrice { get; set; }
     }
     public class GainDrop
     {
@@ -106,6 +106,6 @@ namespace CrawlerDAL.ViewModels
                 return Math.Round(Price.Sum() / Price.Count, 2).ToString();
             else
                 return "0.00";
-        }        
+        }
     }
 }

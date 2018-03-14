@@ -1,4 +1,5 @@
 ﻿using AngleSharp;
+using CrawlerDAL.Selectors;
 using CrawlerDAL.ViewModels;
 using StockAngleSharp.Models;
 using System;
@@ -23,7 +24,7 @@ namespace StockAngleSharp.Service
 
             var mainSelector = @"table table tbody > ";
 
-            CompanySelector company = new CompanySelector()
+            CompanySelector company = new CompanySelector(mainSelector)
             {
                 CompanyCreateDate = mainSelector + "tr:nth-child(3) > td:nth-child(2)",
                 StockCreateDate = mainSelector + "tr:nth-child(4) > td:nth-child(2)",

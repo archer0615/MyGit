@@ -1,9 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 using CrawlerDAL.ViewModels;
-using StockAngleSharp.Enums;
-using StockAngleSharp.Extension;
-using StockAngleSharp.Models;
+using CrawlerDAL.Selectors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +25,7 @@ namespace StockAngleSharp.Service
             #region Hide
             var mainSelector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > ";
 
-            StockSelector stock = new StockSelector()
+            StockSelector stock = new StockSelector(mainSelector)
             {
                 StockName = mainSelector + "td:nth-child(1) > a:nth-child(1)",
                 StockTime = mainSelector + "td:nth-child(2)",

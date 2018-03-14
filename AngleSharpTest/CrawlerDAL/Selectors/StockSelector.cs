@@ -1,13 +1,20 @@
-﻿using System;
+﻿using CrawlerDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockAngleSharp.Models
+namespace CrawlerDAL.Selectors
 {
-    public class StockSelector
+    public class StockSelector : ISelector
     {
+        public string mainSelector { get; set; }
+
+        public StockSelector(string _mainSelector)
+        {
+            mainSelector = _mainSelector;
+        }
         /// <summary>
         /// 代號
         /// </summary>
@@ -56,6 +63,8 @@ namespace StockAngleSharp.Models
         /// 今日最低
         /// </summary>
         public string StockDown { get; set; }
+
+
     }
 
 }
