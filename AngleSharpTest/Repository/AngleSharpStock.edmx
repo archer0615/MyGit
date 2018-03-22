@@ -38,16 +38,60 @@
           <Property Name="Catetory_ID" Type="int" />
           <Property Name="CompanyCreateDate" Type="nvarchar" MaxLength="10" />
           <Property Name="StockCreateDate" Type="nvarchar" MaxLength="10" />
-          <Property Name="Stock_Capital" Type="int" />
+          <Property Name="Stock_Capital" Type="nvarchar" MaxLength="20" />
           <Property Name="Revenue" Type="nvarchar(max)" />
           <Property Name="Company_Official_Url" Type="nvarchar" MaxLength="100" />
           <Property Name="Company_Fatory" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="T_User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Account" Type="nvarchar" MaxLength="20" />
+          <Property Name="HashPassword" Type="nvarchar" MaxLength="20" />
+          <Property Name="Role" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="AlterDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_Yields">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+            <PropertyRef Name="YearMonth" />
+          </Key>
+          <Property Name="Stock_ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="YearMonth" Type="nvarchar" MaxLength="7" Nullable="false" />
+          <Property Name="MonthRate" Type="float" />
+          <Property Name="MonthPrice" Type="float" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'AngleSharp.dbo.VW_AverageYields' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="VW_AverageYields">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Year" Type="nvarchar" MaxLength="4" />
+          <Property Name="AverageRate" Type="float" />
+          <Property Name="AveragePrice" Type="float" />
         </EntityType>
         <EntityContainer Name="AngleSharpModelStoreContainer">
           <EntitySet Name="T_Category" EntityType="Self.T_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_SE" EntityType="Self.T_SE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Stock" EntityType="Self.T_Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_StockCompany" EntityType="Self.T_StockCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_User" EntityType="Self.T_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Yields" EntityType="Self.T_Yields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VW_AverageYields" EntityType="Self.VW_AverageYields" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_AverageYields].[Stock_ID] AS [Stock_ID], 
+    [VW_AverageYields].[Year] AS [Year], 
+    [VW_AverageYields].[AverageRate] AS [AverageRate], 
+    [VW_AverageYields].[AveragePrice] AS [AveragePrice]
+    FROM [dbo].[VW_AverageYields] AS [VW_AverageYields]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -81,8 +125,34 @@
           <EntitySet Name="T_Category" EntityType="Self.T_Category" />
           <EntitySet Name="T_SE" EntityType="Self.T_SE" />
           <EntitySet Name="T_Stock" EntityType="Self.T_Stock" />
+          <EntitySet Name="T_User" EntityType="AngleSharpModel.T_User" />
+          <EntitySet Name="T_Yields" EntityType="AngleSharpModel.T_Yields" />
           <EntitySet Name="T_StockCompany" EntityType="AngleSharpModel.T_StockCompany" />
+          <EntitySet Name="VW_AverageYields" EntityType="AngleSharpModel.VW_AverageYields" />
         </EntityContainer>
+        <EntityType Name="T_User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Account" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HashPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="AlterDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_Yields">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+            <PropertyRef Name="YearMonth" />
+          </Key>
+          <Property Name="Stock_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="YearMonth" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="MonthPrice" Type="Double" />
+          <Property Name="MonthRate" Type="Double" />
+        </EntityType>
         <EntityType Name="T_StockCompany">
           <Key>
             <PropertyRef Name="Stock_ID" />
@@ -92,10 +162,19 @@
           <Property Name="Catetory_ID" Type="Int32" />
           <Property Name="CompanyCreateDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="StockCreateDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Stock_Capital" Type="Int32" />
+          <Property Name="Stock_Capital" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Revenue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Company_Official_Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Company_Fatory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VW_AverageYields">
+          <Key>
+            <PropertyRef Name="Stock_ID" />
+          </Key>
+          <Property Name="Stock_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="AverageRate" Type="Double" />
+          <Property Name="AveragePrice" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -130,6 +209,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_User">
+            <EntityTypeMapping TypeName="AngleSharpModel.T_User">
+              <MappingFragment StoreEntitySet="T_User">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AlterDate" ColumnName="AlterDate" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="HashPassword" ColumnName="HashPassword" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Yields">
+            <EntityTypeMapping TypeName="AngleSharpModel.T_Yields">
+              <MappingFragment StoreEntitySet="T_Yields">
+                <ScalarProperty Name="MonthRate" ColumnName="MonthRate" />
+                <ScalarProperty Name="MonthPrice" ColumnName="MonthPrice" />
+                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="T_StockCompany">
             <EntityTypeMapping TypeName="AngleSharpModel.T_StockCompany">
               <MappingFragment StoreEntitySet="T_StockCompany">
@@ -141,6 +244,16 @@
                 <ScalarProperty Name="CompanyCreateDate" ColumnName="CompanyCreateDate" />
                 <ScalarProperty Name="Catetory_ID" ColumnName="Catetory_ID" />
                 <ScalarProperty Name="Company_Url" ColumnName="Company_Url" />
+                <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_AverageYields">
+            <EntityTypeMapping TypeName="AngleSharpModel.VW_AverageYields">
+              <MappingFragment StoreEntitySet="VW_AverageYields">
+                <ScalarProperty Name="AveragePrice" ColumnName="AveragePrice" />
+                <ScalarProperty Name="AverageRate" ColumnName="AverageRate" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
               </MappingFragment>
             </EntityTypeMapping>

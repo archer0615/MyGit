@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace CrawlerDAL.Selectors
 {
-    public class CategroySelector : ISelector
+    public class CategroySelector 
     {
-        public string mainSelector { get; set; }
-        public CategroySelector(string _mainSelector)
-        {
-            mainSelector = _mainSelector;
-        }
         public string CategoryName { get; set; }
         public string CategoryUrl { get; set; }
 

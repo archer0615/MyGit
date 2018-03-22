@@ -28,6 +28,9 @@ namespace Repository
         public virtual DbSet<T_Category> T_Category { get; set; }
         public virtual DbSet<T_SE> T_SE { get; set; }
         public virtual DbSet<T_Stock> T_Stock { get; set; }
+        public virtual DbSet<T_User> T_User { get; set; }
+        public virtual DbSet<T_Yields> T_Yields { get; set; }
         public virtual DbSet<T_StockCompany> T_StockCompany { get; set; }
+        public virtual DbSet<VW_AverageYields> VW_AverageYields { get; set; }
     }
 }

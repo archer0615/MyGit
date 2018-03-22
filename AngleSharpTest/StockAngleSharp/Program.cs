@@ -1,5 +1,6 @@
-﻿using StockAngleSharp.Models.DB;
-using StockAngleSharp.Models.Repositorys;
+﻿using CrawlerDAL.Selectors;
+using StockAngleSharp.CheckService;
+using StockAngleSharp.Facades;
 using StockAngleSharp.Service;
 using System;
 using System.Collections;
@@ -14,6 +15,16 @@ namespace StockAngleSharp
     {
         static void Main(string[] args)
         {
+            try
+            {
+                //YieldsService Ys = new YieldsService();
+                //Ys.GetYieldsByStockId("2002");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             //try
             //{
             //    T_StockService ts = new T_StockService();

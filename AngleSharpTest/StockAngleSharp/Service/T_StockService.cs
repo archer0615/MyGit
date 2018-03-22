@@ -1,21 +1,18 @@
 ﻿using AngleSharp;
-using AngleSharp.Dom.Html;
-using AngleSharp.Parser.Html;
-using AngleSharp.Xml;
+using CrawlerDAL.Models;
 using CrawlerDAL.Selectors;
 using CrawlerDAL.ViewModels;
+using Repository;
+using Repository.Repositorys;
 using StockAngleSharp.Enums;
 using StockAngleSharp.Extension;
-using StockAngleSharp.Models;
-using StockAngleSharp.Models.DB;
-using StockAngleSharp.Models.DTOs;
-using StockAngleSharp.Models.Repositorys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AngleSharp.Dom;
 
 namespace StockAngleSharp.Service
 {
@@ -70,7 +67,7 @@ namespace StockAngleSharp.Service
 
             var mainSelector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > ";
 
-            StockSelector stock = new StockSelector(mainSelector)
+            StockSelector stock = new StockSelector()
             {
                 StockDeal = mainSelector + "td:nth-child(3)",
                 StockGainDrop = mainSelector + "td:nth-child(6) > font",
@@ -116,20 +113,7 @@ namespace StockAngleSharp.Service
 
             for (int i = 0; i < vm.Days.Count; i++)
             {
-                var newStockProp = TypeDescriptor.GetProperties(selector.Days[i]).Cast<PropertyDescriptor>();
-                var setStockProp = TypeDescriptor.GetProperties(vm.Days[i]).Cast<PropertyDescriptor>();
-
-                foreach (var prop in newStockProp)
-                {
-                    var selectorString = prop.GetValue(selector.Days[i]).ToString();
-                    var data = (Object)dom.QuerySelector(selectorString).TextContent ?? "";
-
-                    foreach (var item in setStockProp)
-                    {
-                        if (prop.Name == item.Name)
-                            vm.Days[i].GetType().GetProperty(item.Name).SetValue(vm.Days[i], data);
-                    }
-                }
+                this.ReflectionViewModel(dom, selector.Days[i], vm.Days[i]);
             }
 
             return vm;
@@ -183,8 +167,8 @@ namespace StockAngleSharp.Service
             var flg = 1;
             AverageYieldViewModel TrueVm = new AverageYieldViewModel();
 
-            StockYieldsViewModel vm = new StockYieldsViewModel();
-            StockYieldsSelector selector = new StockYieldsSelector();
+            StockAverageYieldsViewModel vm = new StockAverageYieldsViewModel();
+            StockAverageYieldsSelector selector = new StockAverageYieldsSelector();
 
             var URL = this.stockYieldsURL(stock_id);
 
@@ -220,19 +204,7 @@ namespace StockAngleSharp.Service
 
             for (int i = 0; i < vm.Years.Count; i++)
             {
-                var newStockProp = TypeDescriptor.GetProperties(selector.Years[i]).Cast<PropertyDescriptor>();
-                var setStockProp = TypeDescriptor.GetProperties(vm.Years[i]).Cast<PropertyDescriptor>();
-                foreach (var prop in newStockProp)
-                {
-                    var selectorString = prop.GetValue(selector.Years[i]).ToString();
-                    var data = (Object)dom.QuerySelector(selectorString).TextContent ?? "";
-
-                    foreach (var item in setStockProp)
-                    {
-                        if (prop.Name == item.Name)
-                            vm.Years[i].GetType().GetProperty(item.Name).SetValue(vm.Years[i], data);
-                    }
-                }
+                this.ReflectionViewModel(dom, selector.Years[i], vm.Years[i]);
             }
 
             var tmp = 0;
@@ -251,10 +223,10 @@ namespace StockAngleSharp.Service
             return TrueVm;
         }
 
-        public StockCompanyViewModel GetCompanyById(string Stock_Id)
+        public StockCompanyViewModel GetCompanyById(string stock_id)
         {
             StockCompanyRepository rep = new StockCompanyRepository();
-            var data = rep.Get(x => x.Stock_ID == Stock_Id);
+            var data = rep.Get(x => x.Stock_ID == stock_id);
             return ConvertToViewModel(data);
         }
         private StockCompanyViewModel ConvertToViewModel(T_StockCompany data)
@@ -271,6 +243,45 @@ namespace StockAngleSharp.Service
                 Revenue = data.Revenue,
                 Company_Fatory = data.Company_Fatory
             };
+        }
+
+        public StockYieldsViewModel GetStockAllYields(string stock_id)
+        {
+            try
+            {
+                StockYieldsViewModel vm = new StockYieldsViewModel();
+                var URL = this.stockYieldsURL(stock_id);
+
+                var dom = BrowsingContext.New(config).OpenAsync(URL).Result;
+
+                var mainSelector = @"#mainCol > div.br-trl > table > tbody ";
+                
+                var trCount = dom.QuerySelector(mainSelector)?.ChildElementCount;
+                var flg = 1;
+                StockYieldsSelector selector = new StockYieldsSelector();
+
+                for (int tr = 0; tr < trCount; tr++)
+                {
+                    selector.Months.Add(new Yield());
+                    vm.Months.Add(new Yield());
+
+                    selector.Months[tr].YieldYear = mainSelector + $"> tr:nth-child({tr + flg}) > td:nth-child(1)";
+                    selector.Months[tr].YieldRate = mainSelector + $"> tr:nth-child({tr + flg}) > td:nth-child(2)";
+                    selector.Months[tr].MonthPrice = mainSelector + $"> tr:nth-child({tr + flg}) > td:nth-child(3)";
+                }
+
+                for (int i = 0; i < vm.Months.Count; i++)
+                {
+                    ReflectionViewModel(dom, selector.Months[i], vm.Months[i]);
+                }
+                return vm;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
     }
 }

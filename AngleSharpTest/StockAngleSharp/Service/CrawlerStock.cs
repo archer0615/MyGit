@@ -25,7 +25,7 @@ namespace StockAngleSharp.Service
             #region Hide
             var mainSelector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > ";
 
-            StockSelector stock = new StockSelector(mainSelector)
+            StockSelector stock = new StockSelector()
             {
                 StockName = mainSelector + "td:nth-child(1) > a:nth-child(1)",
                 StockTime = mainSelector + "td:nth-child(2)",

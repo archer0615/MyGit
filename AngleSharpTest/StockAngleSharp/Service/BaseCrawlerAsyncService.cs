@@ -15,7 +15,8 @@ namespace StockAngleSharp.Service
     public abstract class BaseCrawlerAsyncService<T> : BaseStockService
         where T : class
     {
-        ISelector selector;
+        //ISelector selector;
+        StockSelector selector;
         string URL = string.Empty;
         string mainSelector = string.Empty;
 
@@ -26,7 +27,7 @@ namespace StockAngleSharp.Service
                 case CrawlerURL.StockPriceNow:
                     URL = stockURL + stock_id;
                     mainSelector = @"center > table:nth-child(9) > tbody > tr > td > table > tbody > tr:nth-child(2) > ";
-                    selector = new StockSelector(mainSelector);
+                    selector = new StockSelector();
                     break;
                 case CrawlerURL.StockJuristic:
                     URL = JuristicURL + stock_id + ".htm";

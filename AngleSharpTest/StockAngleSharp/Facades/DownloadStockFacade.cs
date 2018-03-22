@@ -1,5 +1,6 @@
-﻿using StockAngleSharp.Models.DB;
-using StockAngleSharp.Models.Repositorys;
+﻿using Repository;
+using Repository.Repositorys;
+using StockAngleSharp.CheckService;
 using StockAngleSharp.Service;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,56 @@ namespace StockAngleSharp.Facades
 {
     public class DownloadStockFacade
     {
+        /// <summary>
+        /// 下載殖利率/平均月股價
+        /// </summary>
+        /// <param name="stock_id">非必填</param>
+        public void DownloadYields(string stock_id = "")
+        {
+            try
+            {
+                CheckStockCrawlerYields CSCY = new CheckStockCrawlerYields();
+                YieldsRepository YR = new YieldsRepository();
+                StockRepository SR = new StockRepository();
+
+                if (!string.IsNullOrWhiteSpace(stock_id))
+                {
+                    var addYields = CSCY.CheckYields(stock_id);
+                }
+                else
+                {
+                    var stockList = SR.GetAll();
+                    foreach (var stock in stockList)
+                    {
+                        var tmp = YR.Get(x => x.Stock_ID == stock.Stock_ID);
+                        if (tmp == null)
+                        {
+                            var addYields = CSCY.CheckYields(stock.Stock_ID);
+                            Console.Write("目前進行至 :" + stock.Stock_ID);
+                            if (addYields.Count > 0)
+                            {
+                                YR.CreateAll(addYields);
+                                Console.WriteLine("\t新增 : " + addYields.Count + " 筆資料");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"無新增資料");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("已取得資料 : "+stock.Stock_ID);
+                        }
+                    }
+                }
+                YR.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public void DownloadStock()
         {
             T_StockService s = new T_StockService();

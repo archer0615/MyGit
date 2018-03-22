@@ -19,7 +19,7 @@ namespace Repository
         public Nullable<int> Catetory_ID { get; set; }
         public string CompanyCreateDate { get; set; }
         public string StockCreateDate { get; set; }
-        public Nullable<int> Stock_Capital { get; set; }
+        public string Stock_Capital { get; set; }
         public string Revenue { get; set; }
         public string Company_Official_Url { get; set; }
         public string Company_Fatory { get; set; }

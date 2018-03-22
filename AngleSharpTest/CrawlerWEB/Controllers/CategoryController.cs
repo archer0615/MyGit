@@ -11,7 +11,7 @@ namespace CrawlerWEB.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        public ActionResult CategoryListPartial()
+        public ActionResult _CategoryListPartial()
         {
             CategoryService categoryService = new CategoryService();
             var dataList = categoryService.GetAllCategory();

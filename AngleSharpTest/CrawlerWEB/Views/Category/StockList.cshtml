@@ -25,7 +25,7 @@
 }
 <!--類別-->
 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-    @Html.Action("CategoryListPartial", "Category")
+    @Html.Action("_CategoryListPartial", "Category")
 </div>
 <!--類別明細-->
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -74,16 +74,7 @@
         </tr>
     </table>
     <!--近五年平均殖利率/平均股價-->
-    <table class="table table-bordered table-hover" id="AverageYield">
-        <tr>
-            <td colspan="3">近五年平均殖利率/平均股價</td>
-        </tr>
-        <tr>
-            <td>年份</td>
-            <td>平均殖利率</td>
-            <td>平均股價</td>
-        </tr>
-    </table>
+    <div id="AverageYield"></div>
     <!--公司明細-->
     <table class="table table-bordered">
         <tbody>
@@ -127,11 +118,17 @@
         let url = "@Url.Action("Company_AjaxParital", "Stock")";
         let JuristicUrl = "@Url.Action("StockJuristicAsync", "Stock")";
         let gaindropUrl = "@Url.Action("StockGainDrop5DayAsync", "Stock")";
-        let yieldUrl = "@Url.Action("StockYields5YearAsync", "Stock")";
+        let yieldUrlAsync = "@Url.Action("StockYields5YearAsync", "Stock")";
+        let stockYields = "@Url.Action("StockYields", "Stock")";
+        let stockAverageYields = "@Url.Action("_StockAverageYields", "Stock")";
 
         $(function () {
+            var now = new Date();
             GetPriceAsync();
-            Run();
+
+            if (now.getHours() > 9 && now.getHours() < 14) {
+                Run();
+            }
         });
 
         function Run() {
@@ -250,27 +247,15 @@
         }
 
         function AverageYield(stock_id) {
-            var tb_AverageYield = $('#AverageYield');
+            $('#AverageYield').empty();
 
             $.ajax({
                 type: "GET",
-                url: yieldUrl,
-                data: { "stock_Id": stock_id },
-                dataType: "json",
+                url: stockAverageYields,
+                data: { stock_id: stock_id },
+                dataType: "html",
                 success: function (response) {
-                    if (response.Years != null) {
-                        var dataList = response.Years;
-                        for (var i = 0; i < dataList.length; i++) {
-                            var td_year = $('<td></td>').text(dataList[i].Year);
-                            var td_rate = $('<td></td>').text(dataList[i].AverageRate);
-                            var td_price = $('<td></td>').text(dataList[i].AveragePrice);
-
-                            var tr = $('<tr></tr>').addClass('total').append(td_year, td_rate, td_price);
-                            tb_AverageYield.append(tr);
-
-                            tb_AverageYield.show();
-                        }
-                    }
+                    $('#AverageYield').html(response);
                 }
             });
         }

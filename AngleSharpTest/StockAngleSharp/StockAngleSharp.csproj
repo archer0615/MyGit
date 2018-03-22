@@ -61,74 +61,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckService\CheckStockCrawlerYields.cs" />
     <Compile Include="Enums\StockEnum.cs" />
     <Compile Include="Extension\ReplaceOther.cs" />
     <Compile Include="Facades\DownloadStockFacade.cs" />
-    <Compile Include="Models\DB\AngleSharpStock.Context.cs">
-      <DependentUpon>AngleSharpStock.Context.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\DB\AngleSharpStock.cs">
-      <DependentUpon>AngleSharpStock.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\DB\AngleSharpStock.Designer.cs">
-      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\DB\T_Category.cs">
-      <DependentUpon>AngleSharpStock.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DB\T_SE.cs">
-      <DependentUpon>AngleSharpStock.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DB\T_Stock.cs">
-      <DependentUpon>AngleSharpStock.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DB\T_StockCompany.cs">
-      <DependentUpon>AngleSharpStock.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DTOs\T_CategoryModel.cs" />
     <Compile Include="Models\DTOs\T_StockModel.cs" />
-    <Compile Include="Models\Interfaces\IRepository.cs" />
-    <Compile Include="Models\Repositorys\CategoryRepository.cs" />
-    <Compile Include="Models\Repositorys\GenericRepository.cs" />
-    <Compile Include="Models\Repositorys\StockCompanyRepository.cs" />
-    <Compile Include="Models\Repositorys\StockRepository.cs" />
     <Compile Include="Models\DTOs\StockCompany.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BaseCrawlerAsyncService.cs" />
+    <Compile Include="Service\BaseCrawlerListAsyncService.cs" />
     <Compile Include="Service\BaseStockService.cs" />
     <Compile Include="Service\CategoryService.cs" />
     <Compile Include="Service\CrawlerCompanyService.cs" />
     <Compile Include="Service\CrawlerStock.cs" />
     <Compile Include="Service\CrawlerStockCategoryService.cs" />
     <Compile Include="Service\T_StockService.cs" />
+    <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\YieldsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Models\DB\AngleSharpStock.Context.tt">
-      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AngleSharpStock.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DB\AngleSharpStock.tt">
-      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AngleSharpStock.cs</LastGenOutput>
-    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Models\DB\AngleSharpStock.edmx.diagram">
-      <DependentUpon>AngleSharpStock.edmx</DependentUpon>
-    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -138,15 +97,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\DB\AngleSharpStock.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AngleSharpStock.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CrawlerDAL\CrawlerDAL.csproj">
       <Project>{731f2bbb-f57d-4b5f-9da2-e6b2a3475888}</Project>
       <Name>CrawlerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{ace3bbe3-ea80-4cfa-b530-b417d61cf8a7}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

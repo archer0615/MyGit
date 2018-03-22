@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace CrawlerDAL.Selectors
 {
-    public class StockSelector : ISelector
+    public class StockSelector
     {
-        public string mainSelector { get; set; }
-
-        public StockSelector(string _mainSelector)
-        {
-            mainSelector = _mainSelector;
-        }
         /// <summary>
         /// 代號
         /// </summary>
@@ -63,7 +57,6 @@ namespace CrawlerDAL.Selectors
         /// 今日最低
         /// </summary>
         public string StockDown { get; set; }
-
 
     }
 

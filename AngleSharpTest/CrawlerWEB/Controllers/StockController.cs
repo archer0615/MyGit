@@ -1,5 +1,4 @@
 ﻿using CrawlerDAL.ViewModels;
-using StockAngleSharp.Models.Repositorys;
 using StockAngleSharp.Service;
 using System;
 using System.Collections.Generic;
@@ -42,6 +41,12 @@ namespace CrawlerWEB.Controllers
             T_StockService s = new T_StockService();
             var data = s.GetCompanyById(stock_Id);
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult _StockAverageYields(string stock_id)
+        {
+            YieldsService YS = new YieldsService();
+            var vm = YS.GetYieldsByStockId(stock_id);
+            return PartialView(vm);
         }
     }
 }

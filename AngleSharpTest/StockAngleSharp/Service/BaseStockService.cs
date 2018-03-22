@@ -1,6 +1,8 @@
 ﻿using AngleSharp;
+using AngleSharp.Dom;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,5 +34,21 @@ namespace StockAngleSharp.Service
             return $"https://www.wantgoo.com/stock/report/value?stockno={stock_id}&types=3";
         }
         public IConfiguration config = Configuration.Default.WithDefaultLoader();
+
+        protected void ReflectionViewModel(IDocument dom, object selector, object vm)
+        {
+            var newStockProp = TypeDescriptor.GetProperties(selector).Cast<PropertyDescriptor>();
+            var setStockProp = TypeDescriptor.GetProperties(vm).Cast<PropertyDescriptor>();
+            foreach (var prop in newStockProp)
+            {
+                var selectorString = prop.GetValue(selector).ToString();
+                var data = (Object)dom.QuerySelector(selectorString).TextContent ?? "";
+                foreach (var item in setStockProp)
+                {
+                    if (prop.Name == item.Name)
+                        vm.GetType().GetProperty(item.Name).SetValue(vm, data);
+                }
+            }
+        }
     }
 }

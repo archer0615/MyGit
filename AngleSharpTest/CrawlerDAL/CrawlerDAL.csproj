@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,21 +41,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDTO.cs" />
+    <Compile Include="DTOs\LoginDTO.cs" />
+    <Compile Include="DTOs\RegisterDTO.cs" />
+    <Compile Include="Helpers\HashPassword.cs" />
     <Compile Include="Interfaces\ISelector.cs" />
+    <Compile Include="Models\AverageYield.cs" />
+    <Compile Include="Models\Day5Model.cs" />
+    <Compile Include="Models\GainDrop.cs" />
+    <Compile Include="Models\Juristic.cs" />
+    <Compile Include="Models\MonthModel.cs" />
+    <Compile Include="Models\YearModel.cs" />
+    <Compile Include="Models\Yield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selectors\BaseSelectorList.cs" />
     <Compile Include="Selectors\CategroySelector.cs" />
     <Compile Include="Selectors\CompanySelector.cs" />
-    <Compile Include="Selectors\SelectorModel.cs" />
+    <Compile Include="Selectors\Stock5DayGainDropSelector.cs" />
+    <Compile Include="Selectors\StockJuristicSelector.cs" />
     <Compile Include="Selectors\StockSelector.cs" />
+    <Compile Include="Selectors\StockAverageYieldsSelector.cs" />
+    <Compile Include="Selectors\StockYieldsSelector.cs" />
+    <Compile Include="ViewModels\AverageYieldViewModel.cs" />
     <Compile Include="ViewModels\CategoryStockViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\Stock5DayGainDropViewModel.cs" />
     <Compile Include="ViewModels\StockCompanyViewModel.cs" />
+    <Compile Include="ViewModels\StockCrawlerViewModel.cs" />
+    <Compile Include="ViewModels\StockJuristicVeiwModel.cs" />
+    <Compile Include="ViewModels\StockNowPriceViewModel.cs" />
     <Compile Include="ViewModels\StockViewModel.cs" />
+    <Compile Include="ViewModels\StockAverageYieldsViewModel.cs" />
+    <Compile Include="ViewModels\StockYieldsViewModel.cs" />
+    <Compile Include="ViewModels\Yields\AverageYieldsViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

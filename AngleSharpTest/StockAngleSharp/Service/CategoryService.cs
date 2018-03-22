@@ -1,6 +1,6 @@
 ﻿using CrawlerDAL.ViewModels;
-using StockAngleSharp.Models.DB;
-using StockAngleSharp.Models.Repositorys;
+using Repository;
+using Repository.Repositorys;
 using System;
 using System.Collections.Generic;
 using System.Linq;

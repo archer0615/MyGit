@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace CrawlerDAL.Selectors
 {
-    public class CompanySelector : ISelector
+    public class CompanySelector 
     {
-        public string mainSelector { get; set; }
-        public CompanySelector(string _mainSelector)
-        {
-            mainSelector = _mainSelector;
-        }
         /// <summary>
         /// 公司創立時間
         /// </summary>
@@ -38,5 +33,6 @@ namespace CrawlerDAL.Selectors
         /// 工廠
         /// </summary>
         public string Company_Fatory { get; set; }
+
     }
 }

@@ -24,7 +24,7 @@ namespace StockAngleSharp.Service
 
             var mainSelector = @"table table tbody > ";
 
-            CompanySelector company = new CompanySelector(mainSelector)
+            CompanySelector company = new CompanySelector()
             {
                 CompanyCreateDate = mainSelector + "tr:nth-child(3) > td:nth-child(2)",
                 StockCreateDate = mainSelector + "tr:nth-child(4) > td:nth-child(2)",

@@ -9,5 +9,11 @@ namespace CrawlerDAL.Interfaces
     public interface ISelector
     {
         string mainSelector { get; set; }
+        void SetMainSelector(string mainSelector);
+    }
+    public interface ISelectorList
+    {
+        string mainSelector { get; set; }
+        void SetMainSelector(string _mainSelector);
     }
 }
