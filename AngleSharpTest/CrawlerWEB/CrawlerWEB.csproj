@@ -94,6 +94,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -183,6 +187,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Common\MyAuthorize.cs" />
+    <Compile Include="Common\SessionHelper.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StockController.cs" />
@@ -201,6 +207,9 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Stock\_StockAverageYields.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Stock\_StockOptionalParital.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -211,13 +220,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Home\" />
     <Folder Include="Views\System\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrawlerDAL\CrawlerDAL.csproj">
       <Project>{731f2bbb-f57d-4b5f-9da2-e6b2a3475888}</Project>
       <Name>CrawlerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{ACE3BBE3-EA80-4CFA-B530-B417D61CF8A7}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\StockAngleSharp\StockAngleSharp.csproj">
       <Project>{03059dcb-36eb-4009-9ab8-f6de62945139}</Project>

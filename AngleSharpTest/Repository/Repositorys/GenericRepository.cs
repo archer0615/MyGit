@@ -80,6 +80,10 @@ namespace Repository.Repositorys
             }
             return data;
         }
+        public bool Any(Expression<Func<T, bool>> predicate)
+        {
+            return this._context.Set<T>().Any(predicate);
+        }
         public void SaveChanges()
         {
             this._context.SaveChanges();

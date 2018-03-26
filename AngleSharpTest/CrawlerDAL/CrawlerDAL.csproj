@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BaseDTO.cs" />
     <Compile Include="DTOs\LoginDTO.cs" />
+    <Compile Include="DTOs\OptionalDTO.cs" />
     <Compile Include="DTOs\RegisterDTO.cs" />
     <Compile Include="Helpers\HashPassword.cs" />
     <Compile Include="Interfaces\ISelector.cs" />

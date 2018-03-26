@@ -48,5 +48,17 @@ namespace CrawlerWEB.Controllers
             var vm = YS.GetYieldsByStockId(stock_id);
             return PartialView(vm);
         }
+        public ActionResult _StockOptionalParital(string StockID)
+        {
+            OptionalService OS = new OptionalService();
+            var vm = OS.GetOptionalStatus(StockID, Convert.ToInt32(Session["UserId"]));
+            return PartialView(vm);
+        }
+        public ActionResult OptionalAsync(string stock_id)
+        {
+            OptionalService OS = new OptionalService();
+            var status = OS.SelectOptional(stock_id, Convert.ToInt32(Session["UserId"]));
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
     }
 }

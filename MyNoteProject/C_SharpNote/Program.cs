@@ -15,8 +15,13 @@ namespace C_SharpNote
     {
         static void Main(string[] args)
         {
-            Excute.ConvertPwd();
-            
+            //Excute.ConvertPwd();
+            EnumConvert e = new EnumConvert();
+            //e.Run();
+            //C_SharpNote.EnumHelper s = new C_SharpNote.EnumHelper  //.GetEnumDisplayName();
+            int test = 2;
+
+            Console.WriteLine(EnumHelperClass.GetEnumDisplayName((Country)test));
             //Program s = new Program();
             //Console.WriteLine(DateTime.Now);
             //Thread.Sleep(5000);

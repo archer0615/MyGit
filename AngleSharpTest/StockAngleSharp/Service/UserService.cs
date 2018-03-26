@@ -10,7 +10,7 @@ namespace StockAngleSharp.Service
 {
     public class UserService
     {
-        public bool LoginValidService(LoginDTO loginData)
+        public int LoginValidService(LoginDTO loginData)
         {
             UserRepository UR = new UserRepository();
             return UR.LoginValid(loginData);

@@ -13,12 +13,10 @@
         }
 
         .Price {
-            /*display: inline;*/
             text-align: left !important;
         }
 
         .GainDrop {
-            /*display: inline;*/
             text-align: right !important;
         }
     </style>
@@ -28,7 +26,7 @@
     @Html.Action("_CategoryListPartial", "Category")
 </div>
 <!--類別明細-->
-<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -36,6 +34,7 @@
                 <th>名稱</th>
                 <th colspan="2">成交 / 波動</th>
                 <th>明細</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -53,64 +52,87 @@
                         </div>
                     </td>
                     <td><a href="#" class="btn btn-default" onclick="BindDatail(@item.StockID)">明細</a></td>
+                    <td>@Html.Action("_StockOptionalParital", "Stock", new { item.StockID })</td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-<div id="BindDetail" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+<div id="BindDetail" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
     <!--近五日三大法人買賣超總表-->
-    <table class="table table-bordered table-hover" id="Juristic">
-        <tr>
-            <td colspan="6">近五日三大法人買賣超總表</td>
-        </tr>
-        <tr>
-            <td>日期</td>
-            <td>外資</td>
-            <td>投信</td>
-            <td>自營商</td>
-            <td>合計</td>
-            <td>漲跌%</td>
-        </tr>
-    </table>
+    <div class="panel-heading">
+        <h4 class="panel-title text-center">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseJuristic">
+                近五日三大法人買賣超總表
+            </a>
+        </h4>
+        <div id="collapseJuristic" class="panel-collapse collapse">
+            <table class="table table-bordered table-hover" id="Juristic">
+                <tr>
+                    <td>日期</td>
+                    <td>外資</td>
+                    <td>投信</td>
+                    <td>自營商</td>
+                    <td>合計</td>
+                    <td>漲跌%</td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <!--近五年平均殖利率/平均股價-->
-    <div id="AverageYield"></div>
+    <div class="panel-heading">
+        <h4 class="panel-title text-center">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseAverageYield">
+                近五年平均殖利率/平均股價
+            </a>
+        </h4>
+        <div id="AverageYield"></div>
+    </div>
     <!--公司明細-->
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <td colspan="4">公司明細</td>
-            </tr>
-            <tr>
-                <td>代號</td>
-                <td id="Stock_ID"></td>
-                <td>網址</td>
-                <td><a id="Company_Official_Url" href="#">官網</a></td>
-            </tr>
-            <tr>
-                <td>類別</td>
-                <td id="Catetory_Name"></td>
-                <td>資本</td>
-                <td id="Stock_Capital"></td>
-            </tr>
-            <tr>
-                <td>創立時間</td>
-                <td id="CompanyCreateDate"></td>
-                <td>上市時間</td>
-                <td id="StockCreateDate"></td>
-            </tr>
-            <tr>
-                <td>營收</td>
-                <td colspan="3" rowspan="2" id="Revenue"></td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td>工廠</td>
-                <td colspan="3" rowspan="2" id="Company_Fatory"></td>
-            </tr>
-            <tr></tr>
-        </tbody>
-    </table>
+    <div class="panel-heading">
+        <h4 class="panel-title text-center">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseCompanyDetail">
+                公司明細
+            </a>
+        </h4>
+        <div id="collapseCompanyDetail" class="panel-collapse collapse">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>代號</td>
+                        <td id="Stock_ID"></td>
+                        <td>網址</td>
+                        <td><a id="Company_Official_Url" href="#">官網</a></td>
+                    </tr>
+                    <tr>
+                        <td>類別</td>
+                        <td id="Catetory_Name"></td>
+                        <td>資本</td>
+                        <td id="Stock_Capital"></td>
+                    </tr>
+                    <tr>
+                        <td>創立時間</td>
+                        <td id="CompanyCreateDate"></td>
+                        <td>上市時間</td>
+                        <td id="StockCreateDate"></td>
+                    </tr>
+                    <tr>
+                        <td>營收</td>
+                        <td colspan="3" rowspan="2" id="Revenue"></td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td>工廠</td>
+                        <td colspan="3" rowspan="2" id="Company_Fatory"></td>
+                    </tr>
+                    <tr></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @section JS{
@@ -121,6 +143,7 @@
         let yieldUrlAsync = "@Url.Action("StockYields5YearAsync", "Stock")";
         let stockYields = "@Url.Action("StockYields", "Stock")";
         let stockAverageYields = "@Url.Action("_StockAverageYields", "Stock")";
+        let optionalUrl = "@Url.Action("OptionalAsync", "Stock")";
 
         $(function () {
             var now = new Date();
@@ -259,5 +282,37 @@
                 }
             });
         }
+
+        //_StockOptionalParital
+        function OptionalService(obj) {
+            var parentDiv = $(obj).parent();
+            var stock_id = $(obj).data('stock');
+            $(obj).remove();
+
+            $.ajax({
+                type: "GET",
+                url: optionalUrl,
+                data: { "stock_Id": stock_id },
+                success: function (response) {
+                    if (response != null) {
+                        OptionalReAppend(parentDiv, stock_id);
+                    }
+                }
+            });
+        }
+
+        function OptionalReAppend(parentDiv, stock_id) {
+            let _StockOptionalParital = "@Url.Action("_StockOptionalParital","Stock")";
+            $.ajax({
+                type: "GET",
+                url: _StockOptionalParital,
+                data: { StockID: stock_id },
+                dataType: "html",
+                success: function (response) {
+                    parentDiv.html(response);
+                }
+            });
+        }
+        //_StockOptionalParital End
     </script>
 }

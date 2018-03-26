@@ -13,5 +13,6 @@ namespace CrawlerDAL.DTOs
         public string Account { get; set; }
         [Required(ErrorMessage = "請輸入密碼")]
         public string Password { get; set; }
+        public int User_ID { get; set; }
     }
 }

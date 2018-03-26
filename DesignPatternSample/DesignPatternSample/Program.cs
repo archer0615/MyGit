@@ -11,12 +11,12 @@ namespace DesignPatternSample
     {
         static void Main(string[] args)
         {
-            //ChainOfResponsibility.Main test = new ChainOfResponsibility.Main();
-            //test.Run();
+            ChainOfResponsibility.Main test = new ChainOfResponsibility.Main();
+            test.Run();
 
             //Command.Client testCommand = new Command.Client();
             //testCommand.Run();
-            Command_Game.Main.Run();
+            //Command_Game.Main.Run();
         }
     }
 }

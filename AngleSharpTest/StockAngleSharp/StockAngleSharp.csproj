@@ -77,6 +77,7 @@
     <Compile Include="Service\CrawlerCompanyService.cs" />
     <Compile Include="Service\CrawlerStock.cs" />
     <Compile Include="Service\CrawlerStockCategoryService.cs" />
+    <Compile Include="Service\OptionalService.cs" />
     <Compile Include="Service\T_StockService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\YieldsService.cs" />

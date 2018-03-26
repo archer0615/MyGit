@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesignPatternSample.ChainOfResponsibility
 {
-    public abstract class ApplyLeaveHandler
+    public abstract class ApplyLeaveHandler 
     {
         protected string Name;
         protected int DayNum;

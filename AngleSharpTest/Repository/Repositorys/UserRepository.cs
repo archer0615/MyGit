@@ -10,12 +10,19 @@ namespace Repository.Repositorys
 {
     public class UserRepository : GenericRepository<T_User>
     {
-        public bool LoginValid(LoginDTO loginData)
+        public int LoginValid(LoginDTO loginData)
         {
             var hashPwd = HashPassword.HashPwd(loginData.Password);
-            return this._context.Set<T_User>()
-                .Any(x => x.Account.Equals(loginData.Account)
-                && x.HashPassword.Equals(hashPwd));
+            var Data = Get(x => x.Account.Equals(loginData.Account)
+                                && x.HashPassword.Equals(hashPwd));
+            if (Data != null)
+            {
+                return Data.User_ID;
+            }
+            else
+            {
+                return 0;
+            }
         }
         public bool Register(RegisterDTO registerData)
         {
@@ -27,8 +34,13 @@ namespace Repository.Repositorys
                 {
                     Account = registerData.Account,
                     HashPassword = hashPwd,
+                    AlterDate = DateTime.Now,
+                    CreateDate = DateTime.Now,
+                    Role = 1,
+                    Status = 1,
                 };
                 Create(data);
+                SaveChanges();
             }
             catch (Exception ex)
             {

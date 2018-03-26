@@ -1,22 +1,21 @@
 ﻿@using CrawlerDAL.ViewModels.Yields;
 @model IEnumerable<AverageYieldsViewModel>
 
-    <!--近五年平均殖利率/平均股價-->
-<table class="table table-bordered table-hover">
-    <tr>
-        <th colspan="3">近五年平均殖利率/平均股價</th>
-    </tr>
-    <tr>
-        <td>年份</td>
-        <td>平均殖利率</td>
-        <td>平均股價</td>
-    </tr>
-    @foreach (var Yields in Model)
-    {
+<!--近五年平均殖利率/平均股價-->
+<div id="collapseAverageYield" class="panel-collapse collapse">
+    <table class="table table-bordered table-hover">
         <tr>
-            <td>@Yields.Year</td>
-            <td>@Yields.AverageRate</td>
-            <td>@Yields.AveragePrice</td>
+            <th>年份</th>
+            <th>平均殖利率</th>
+            <th>平均股價</th>
         </tr>
-    }
-</table>
+        @foreach (var Yields in Model)
+        {
+            <tr>
+                <td>@Yields.Year</td>
+                <td>@Yields.AverageRate</td>
+                <td>@Yields.AveragePrice</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -70,11 +70,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\CategoryRepository.cs" />
     <Compile Include="Repositorys\GenericRepository.cs" />
+    <Compile Include="Repositorys\OptionalRepository.cs" />
     <Compile Include="Repositorys\StockCompanyRepository.cs" />
     <Compile Include="Repositorys\StockRepository.cs" />
     <Compile Include="Repositorys\UserRepository.cs" />
     <Compile Include="Repositorys\YieldsRepository.cs" />
     <Compile Include="T_Category.cs">
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T_Optional.cs">
+      <DependentUpon>AngleSharpStock.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T_Role.cs">
       <DependentUpon>AngleSharpStock.tt</DependentUpon>
     </Compile>
     <Compile Include="T_SE.cs">

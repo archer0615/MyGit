@@ -1,0 +1,15 @@
+﻿@using CrawlerDAL.DTOs;
+@model OptionalDTO
+
+@if (!Model.OptionalStatus)
+{
+    <div >
+        <a href="#" class="btn btn-success optionalClass" data-stock="@Model.Stock_ID" onclick="OptionalService(this)">加入自選</a>
+    </div>
+}
+else
+{
+    <div>
+        <a href="#" class="btn btn-warning optionalClass" data-stock="@Model.Stock_ID" onclick="OptionalService(this)">取消自選</a>
+    </div>
+}

@@ -1,4 +1,5 @@
 ﻿//using CrawlerWEB.Services;
+using CrawlerWEB.Common;
 using StockAngleSharp.Service;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace CrawlerWEB.Controllers
             var dataList = categoryService.GetAllCategory();
             return PartialView(dataList);
         }
+        [MyAuthorize]
         public ActionResult StockList(int Id = 1)
         {
             CategoryService categoryService = new CategoryService();
