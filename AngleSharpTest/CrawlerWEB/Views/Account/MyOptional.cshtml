@@ -1,0 +1,266 @@
+﻿@model IEnumerable<OptionalDTO>
+@{
+    ViewBag.Title = "MyOptional";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+@section CSS{
+    <style>
+        .stockOptional {
+            margin: 3px;
+            padding: 5px;
+        }
+    </style>
+}
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    @foreach (var optional in Model)
+    {
+        <a href="#" class="btn btn-info btn-lg form-control stockOptional" data-stock="@optional.Stock_ID">@optional.Stock_Name</a>
+    }
+</div>
+<!--類別明細-->
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>代號</th>
+                <th>名稱</th>
+                <th colspan="2">成交 / 波動</th>
+                <th>明細</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Stock_ID</td>
+                    <td>
+                        <label>@item.Stock_Name</label>
+                    </td>
+                    <td colspan="2">
+                        <div class="AsyncPrice" data-id="@item.Stock_ID">
+                            <div class="Price"></div>
+                            <div class="GainDrop"></div>
+                        </div>
+                    </td>
+                    <td><a href="#" class="btn btn-default" onclick="BindDatail(@item.Stock_ID)">明細</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="BindDetail" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <!--近五日三大法人買賣超總表-->
+    <div class="panel-heading">
+        <h4 class="panel-title text-center">
+            @*<a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseJuristic">
+                近五日三大法人買賣超總表
+            </a>*@
+            近五日三大法人買賣超總表
+        </h4>
+        <div id="collapseJuristic">
+            <table class="table table-bordered table-hover" id="Juristic">
+                <tr>
+                    <td>日期</td>
+                    <td>外資</td>
+                    <td>投信</td>
+                    <td>自營商</td>
+                    <td>合計</td>
+                    <td>漲跌%</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!--近五年平均殖利率/平均股價-->
+    <div class="panel-heading">
+        <h4 class="panel-title text-center">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseAverageYield">
+                近五年平均殖利率/平均股價
+            </a>
+        </h4>
+        <div id="AverageYield"></div>
+    </div>
+</div>
+
+@section JS{
+    <script>
+        let url = "@Url.Action("Company_AjaxParital", "Stock")";
+        let JuristicUrl = "@Url.Action("StockJuristicAsync", "Stock")";
+        let gaindropUrl = "@Url.Action("StockGainDrop5DayAsync", "Stock")";
+        let yieldUrlAsync = "@Url.Action("StockYields5YearAsync", "Stock")";
+        let stockYields = "@Url.Action("StockYields", "Stock")";
+        let stockAverageYields = "@Url.Action("_StockAverageYields", "Stock")";
+        let optionalUrl = "@Url.Action("OptionalAsync", "Stock")";
+
+        $(function () {
+            var now = new Date();
+            GetPriceAsync();
+
+            if (now.getHours() > 9 && now.getHours() < 14) {
+                Run();
+            }
+        });
+
+        function Run() {
+            setInterval(GetPriceAsync, 5000);
+        }
+
+        //$('#BindDetail,#Juristic').hide();
+
+        function GetPriceAsync() {
+            var url = "@Url.Action("StockPriceNowAsync", "Stock")";
+
+            $('.AsyncPrice').each(function () {
+                var stock_id = $(this).attr('data-id');
+                var thisTag = $(this);
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: { "stock_Id": stock_id },
+                    dataType: "json",
+                    success: function (response) {
+                        var price = $(thisTag.children()).first();
+                        var gainDrop = $(thisTag.children()).last();
+                        if (price.text() != response.Price) {
+                            price.text(response.Price);
+                        }
+                        gainDrop.text(response.GainDrop).attr('style', 'color:' + response.Color);
+                    }
+                });
+            })
+        }
+
+        function BindDatail(stock_id) {
+            $('.total').remove();
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    //$('#Stock_ID').text(response.Stock_ID);
+                    //$('#Catetory_Name').text(response.Catetory_Name);
+                    //$('#Company_Official_Url').attr('href', response.Company_Official_Url);
+                    //$('#CompanyCreateDate').text(response.CompanyCreateDate);
+                    //$('#StockCreateDate').text(response.StockCreateDate);
+                    //$('#Stock_Capital').text(response.Stock_Capital);
+                    //$('#Revenue').text(response.Revenue);
+                    //$('#Company_Fatory').text(response.Company_Fatory);
+                    //$('#Revenue').text(response.Revenue);
+                    $('#BindDetail').show();
+
+                    Juristic(stock_id);
+                    AverageYield(stock_id);
+                },
+            });
+        }
+
+        function Juristic(stock_id) {
+            var tb_Juristic = $('#Juristic');
+            $.ajax({
+                type: "GET",
+                url: JuristicUrl,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    if (response.Days != null) {
+                        var dataList = response.Days;
+                        for (var i = 0; i < dataList.length; i++) {
+                            var td_JuristicDate = $('<td></td>').text(dataList[i].JuristicDate);
+                            var td_Foreign = $('<td></td>').text(dataList[i].Foreign);
+                            var td_Investment = $('<td></td>').text(dataList[i].Investment);
+                            var td_Self = $('<td></td>').text(dataList[i].Self);
+                            var td_Total = $('<td></td>').text(dataList[i].Total);
+
+                            var tr = $('<tr></tr>').addClass('total').append(td_JuristicDate,
+                                                                                                    td_Foreign,
+                                                                                                    td_Investment,
+                                                                                                    td_Self,
+                                                                                                    td_Total)
+                            tb_Juristic.append(tr);
+                            tb_Juristic.show();
+                        }
+                        GainDropAjax(stock_id);
+                    }
+                }
+            });
+        }
+
+        function GainDropAjax(stock_id) {
+            $.ajax({
+                type: "GET",
+                url: gaindropUrl,
+                data: { "stock_Id": stock_id },
+                dataType: "json",
+                success: function (response) {
+                    if (response.Days != null) {
+                        var dataList = response.Days;
+                        for (var i = 0; i < dataList.length; i++) {//GainDropDate
+                            var thisPer = dataList[i].Per;
+                            var thisTd = $('<td></td>').text(thisPer);
+                            var thisTr = $('.total:eq(' + i + ')');
+
+                            if (thisPer.search('0.00%') == 0) {
+                                thisTr.append(thisTd);
+                            }
+                            else if (thisPer.search('-') == 0) {
+                                thisTr.append(thisTd.attr('style', 'color:Green'));
+                            }
+                            else {
+                                thisTr.append(thisTd.attr('style', 'color:Red'));
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function AverageYield(stock_id) {
+            $('#AverageYield').empty();
+
+            $.ajax({
+                type: "GET",
+                url: stockAverageYields,
+                data: { stock_id: stock_id },
+                dataType: "html",
+                success: function (response) {
+                    $('#AverageYield').html(response);
+                }
+            });
+        }
+
+        //_StockOptionalParital
+        //function OptionalService(obj) {
+        //    var parentDiv = $(obj).parent();
+        //    var stock_id = $(obj).data('stock');
+        //    $(obj).remove();
+
+        //    $.ajax({
+        //        type: "GET",
+        //        url: optionalUrl,
+        //        data: { "stock_Id": stock_id },
+        //        success: function (response) {
+        //            if (response != null) {
+        //                OptionalReAppend(parentDiv, stock_id);
+        //            }
+        //        }
+        //    });
+        //}
+
+        @*function OptionalReAppend(parentDiv, stock_id) {
+            let _StockOptionalParital = "@Url.Action("_StockOptionalParital","Stock")";
+            $.ajax({
+                type: "GET",
+                url: _StockOptionalParital,
+                data: { StockID: stock_id },
+                dataType: "html",
+                success: function (response) {
+                    parentDiv.html(response);
+                }
+            });
+        }*@
+        //_StockOptionalParital End
+    </script>
+}

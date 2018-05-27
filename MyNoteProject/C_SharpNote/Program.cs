@@ -8,6 +8,8 @@ using AngleSharp;
 using C_SharpNote.Compare;
 using C_SharpNote.EnumHelper;
 using C_SharpNote.HashPassword;
+using C_SharpNote.DateTimeHelper;
+using C_SharpNote.Helper;
 
 namespace C_SharpNote
 {
@@ -15,35 +17,13 @@ namespace C_SharpNote
     {
         static void Main(string[] args)
         {
-            //Excute.ConvertPwd();
-            EnumConvert e = new EnumConvert();
-            //e.Run();
-            //C_SharpNote.EnumHelper s = new C_SharpNote.EnumHelper  //.GetEnumDisplayName();
-            int test = 2;
 
-            Console.WriteLine(EnumHelperClass.GetEnumDisplayName((Country)test));
-            //Program s = new Program();
-            //Console.WriteLine(DateTime.Now);
-            //Thread.Sleep(5000);
-            //var t1 = Task.Run(() =>
-            //{
-            //    s.Task1(); 
-            //});
-            //var t2 = Task.Run(() =>
-            //{
-            //    s.Task2();
-            //});
-            //var t3 = Task.Run(() =>
-            //{
-            //    s.Task3();
-            //});
+            var s = HolidayHelper.IsHolidays(DateTime.Now);
+            Console.WriteLine(s);
 
-            ////Task.WaitAll(t1, t2, t3);
-            ////Console.WriteLine(DateTime.Now);
 
-            //Console.ReadLine();
         }
-
+  
         public async void Task1()
         {
             //DoGet(50, 100);

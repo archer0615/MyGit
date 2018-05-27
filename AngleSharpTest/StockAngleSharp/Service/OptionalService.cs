@@ -20,12 +20,13 @@ namespace StockAngleSharp.Service
         }
         public OptionalDTO GetOptionalStatus(string stock_id, int user_id)
         {
-            return new OptionalDTO()
+            OptionalDTO result = new OptionalDTO() { Stock_ID = stock_id };
+            if (OR.Any(x => x.Stock_ID == stock_id && x.User_ID == user_id))
             {
-                Stock_ID = stock_id,
-                OptionalStatus = Convert.ToBoolean(OR.Get(x => x.Stock_ID == stock_id
-                                                                            && x.User_ID == user_id).Status),
-            };
+                result.OptionalStatus = Convert.ToBoolean(OR.Get(x => x.Stock_ID == stock_id
+                                                                                && x.User_ID == user_id).Status);
+            }
+            return result;
         }
         public bool SelectOptional(string stock_id, int user_id)
         {
@@ -65,6 +66,22 @@ namespace StockAngleSharp.Service
             Data.AlterDate = DateTime.Now;
             OR.SaveChanges();
             return Convert.ToBoolean(result);
+        }
+        public List<OptionalDTO> GetOptionalStatus(int user_id)
+        {
+            List<OptionalDTO> results = new List<OptionalDTO>();
+            var dbDataList = OR.GetAllById(x => x.User_ID == user_id && x.Status == 1);
+            foreach (var optionalItem in dbDataList)
+            {
+                results.Add(new OptionalDTO()
+                {
+                    Stock_ID = optionalItem.Stock_ID,
+                    Stock_Name = db.T_Stock
+                                        .Where(x => x.Stock_ID == optionalItem.Stock_ID)
+                                        .Select(x => x.Stock_Name).FirstOrDefault() ?? "",
+                });
+            }
+            return results;
         }
     }
 }

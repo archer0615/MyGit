@@ -27,12 +27,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("首頁", "StockList", "Category", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("自選股", "MyOptional", "Account", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
                     @if (Convert.ToBoolean(Session["Auth"]))
                     {
-                        @Session["UserName"]
+                       <li class="navbar-brand">Hello! @Session["Account"]</li>
                         @Html.ActionLink("登出", "Logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     }
                     else
