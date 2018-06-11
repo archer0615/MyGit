@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using C_SharpNote.Builder_Pattern;
 using C_SharpNote.Compare;
 using C_SharpNote.EnumHelper;
 using C_SharpNote.HashPassword;
@@ -18,11 +17,7 @@ namespace C_SharpNote
     {
         static void Main(string[] args)
         {
-            Context ct = new Context();
-            Profile p1 = new Profile.Builder(ct, "123456")
-                .setIsActivated(true)
-                .build();
-            Console.WriteLine();
+
         }
 
         public async void Task1()

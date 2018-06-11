@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeHelper\CheckSessionFilterAttribute.cs" />
-    <Compile Include="Builder_Pattern\Profile.cs" />
     <Compile Include="Compare\MyCompare.cs" />
     <Compile Include="DateTimeHelper\DatetimeHelper.cs" />
     <Compile Include="HashPassword\Excute.cs" />

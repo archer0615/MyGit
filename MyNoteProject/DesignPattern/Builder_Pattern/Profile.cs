@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C_SharpNote.Builder_Pattern
+namespace DesignPattern.Builder_Pattern
 {
     public class Profile
     {

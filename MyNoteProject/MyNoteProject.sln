@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularMvcWeb", "AngularMvc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Repository", "MVC_Repository\MVC_Repository\MVC_Repository.csproj", "{578E3F47-B330-4152-9700-71EDED1A2916}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPattern", "DesignPattern\DesignPattern.csproj", "{915008AC-C364-4C4F-BFD2-2B409857B74B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{578E3F47-B330-4152-9700-71EDED1A2916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{578E3F47-B330-4152-9700-71EDED1A2916}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{578E3F47-B330-4152-9700-71EDED1A2916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
