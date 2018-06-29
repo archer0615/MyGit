@@ -10,6 +10,7 @@ using C_SharpNote.HashPassword;
 using C_SharpNote.DateTimeHelper;
 using C_SharpNote.Helper;
 using AngleSharp;
+using C_SharpNote.CollectionsToHtmlTable;
 
 namespace C_SharpNote
 {
@@ -17,7 +18,7 @@ namespace C_SharpNote
     {
         static void Main(string[] args)
         {
-
+            CollectionsToHtmlTableHelper.RunProcess();
         }
 
         public async void Task1()
