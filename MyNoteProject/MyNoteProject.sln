@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Repository", "MVC_Repos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPattern", "DesignPattern\DesignPattern.csproj", "{915008AC-C364-4C4F-BFD2-2B409857B74B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebAPI", "MyWebAPI\MyWebAPI.csproj", "{DEE00F1B-71E2-48FB-B75C-718D241C3F26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{915008AC-C364-4C4F-BFD2-2B409857B74B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEE00F1B-71E2-48FB-B75C-718D241C3F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEE00F1B-71E2-48FB-B75C-718D241C3F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEE00F1B-71E2-48FB-B75C-718D241C3F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEE00F1B-71E2-48FB-B75C-718D241C3F26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
