@@ -18,7 +18,10 @@ namespace C_SharpNote
     {
         static void Main(string[] args)
         {
-            CollectionsToHtmlTableHelper.RunProcess();
+            //CollectionsToHtmlTableHelper.RunProcess();
+            //Console.WriteLine(EnumHelper.EnumHelper.GetDescription(Category.Clothing));
+            //Console.WriteLine(EnumHelper.EnumHelper.GetEnumDisplayName(Category.Clothing));
+
         }
 
         public async void Task1()
