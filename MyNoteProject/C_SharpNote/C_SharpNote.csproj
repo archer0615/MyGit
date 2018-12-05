@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="AttributeHelper\CheckSessionFilterAttribute.cs" />
     <Compile Include="BannerFunction.cs" />
+    <Compile Include="BannerLoyout.cs" />
     <Compile Include="CollectionsToHtmlTable\CollectionsToHtmlTableHelper.cs" />
     <Compile Include="Compare\MyCompare.cs" />
     <Compile Include="DateTimeHelper\DatetimeHelper.cs" />
