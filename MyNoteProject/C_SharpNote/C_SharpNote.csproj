@@ -97,8 +97,9 @@
     <Compile Include="Notes\StringReverse.cs" />
     <Compile Include="Notes\WhereT_dotblogs.cs" />
     <Compile Include="Notes\WhereT_microsoft.cs" />
-    <Compile Include="StockSelector.cs" />
-    <Compile Include="StockViewModel.cs" />
+    <Compile Include="Stock\StockSelector.cs" />
+    <Compile Include="Stock\StockViewModel.cs" />
+    <Compile Include="Stock\GetStock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
