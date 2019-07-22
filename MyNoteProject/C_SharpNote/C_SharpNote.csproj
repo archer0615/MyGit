@@ -74,14 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeHelper\CheckSessionFilterAttribute.cs" />
-    <Compile Include="BannerFunction.cs" />
-    <Compile Include="BannerLoyout.cs" />
     <Compile Include="CollectionsToHtmlTable\CollectionsToHtmlTableHelper.cs" />
     <Compile Include="Compare\MyCompare.cs" />
     <Compile Include="DateTimeHelper\DatetimeHelper.cs" />
     <Compile Include="HashPassword\Excute.cs" />
     <Compile Include="Helper\HolidayHelper.cs" />
     <Compile Include="Helper\XmlHelper.cs" />
+    <Compile Include="LinqGroup\TryGroupBy.cs" />
     <Compile Include="Notes\BinarySearch.cs" />
     <Compile Include="Notes\DataProcess.cs" />
     <Compile Include="EnumHelper\EnumConvert.cs" />
