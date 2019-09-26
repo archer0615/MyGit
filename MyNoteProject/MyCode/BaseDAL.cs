@@ -466,6 +466,52 @@ namespace ROG_BackStage.DAL
 
             return insertedRows;
         }
+        
+        /// <summary>
+        /// 批量插入功能
+        /// </summary>
+        public void InsertBatch<T>(IEnumerable<T> entityList)
+            where T : class
+        {
+            var tblName = ((TableAttribute)typeof(T).GetCustomAttributes(typeof(TableAttribute), true).First()).Name;
+            using (IDbConnection con = GetDbConnection())
+            using (IDbTransaction transaction = con.BeginTransaction())
+            {
+                try
+                {
+                    using (var bulkCopy = new SqlBulkCopy(con as SqlConnection, SqlBulkCopyOptions.TableLock, transaction as SqlTransaction))
+                    {
+                        bulkCopy.BatchSize = entityList.Count();
+                        bulkCopy.DestinationTableName = tblName;
+                        var table = new DataTable();
+                        DapperExtensions.Sql.ISqlGenerator sqlGenerator = new DapperExtensions.Sql.SqlGeneratorImpl(new DapperExtensions.DapperExtensionsConfiguration());
+                        var classMap = sqlGenerator.Configuration.GetMap<T>();
+                        var props = classMap.Properties.Where(x => x.Ignored == false).ToArray();
+                        foreach (var propertyInfo in props)
+                        {
+                            bulkCopy.ColumnMappings.Add(propertyInfo.Name, propertyInfo.Name);
+                            table.Columns.Add(propertyInfo.Name, Nullable.GetUnderlyingType(propertyInfo.PropertyInfo.PropertyType) ?? propertyInfo.PropertyInfo.PropertyType);
+                        }
+                        var values = new object[props.Count()];
+                        foreach (var itemm in entityList)
+                        {
+                            for (var i = 0; i < values.Length; i++)
+                            {
+                                values[i] = props[i].PropertyInfo.GetValue(itemm, null);
+                            }
+                            table.Rows.Add(values);
+                        }
+                        bulkCopy.WriteToServer(table);
+                        transaction.Commit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
 
         public bool MyTransactionInsert<T1, T2, T3, T4>(T1 insertT1, T2 insertT2, T3 insertT3, T4 insertT4)
             where T1 : class where T2 : class where T3 : class where T4 : class
